@@ -7,8 +7,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,15 +21,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.DespesaController;
-import br.com.thomaz.restapifinanceira.criador.Listas;
 import br.com.thomaz.restapifinanceira.dto.DespesaDto;
-import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
+import br.com.thomaz.restapifinanceira.helper.Criar;
+import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
 import br.com.thomaz.restapifinanceira.service.DespesaService;
 
 class ListarDetalharDespesasTest {
-
+    private TesteHelper helper = new TesteHelper();
     @Mock private DespesaRepository repository;
     private MockitoSession session;
     private DespesaController controller;
@@ -49,7 +47,7 @@ class ListarDetalharDespesasTest {
 
     @Test
     void deveListarTodasDespesas() {
-        List<Despesa> despesas = Listas.despesas();
+        List<Despesa> despesas = Criar.despesas();
         
         when(repository.findAll()).thenReturn(despesas);
         
@@ -66,7 +64,7 @@ class ListarDetalharDespesasTest {
     
     @Test
     void deveListarPorDescricao() {
-        List<Despesa> despesas = Listas.despesas();
+        List<Despesa> despesas = Criar.despesas();
         String descricaoValida = "Aluguel";
         String descricaoInvalida = "alugueu";
         when(repository.findByDescricaoIgnoreCase(descricaoValida)).thenReturn(filtrar(despesas, descricaoValida));
@@ -83,7 +81,7 @@ class ListarDetalharDespesasTest {
     }
 
     void deveDetalharUmaDespesaSeIdValido() {
-        Despesa despesa = Listas.despesas().get(0);
+        Despesa despesa = Criar.despesas().get(0);
         
         String idValido = "1";
         String idInvalido = "-1";
@@ -99,15 +97,8 @@ class ListarDetalharDespesasTest {
         verify(repository, times(1)).findById(idValido);
         verify(repository, never()).findById(idInvalido);
         assertEquals(HttpStatus.OK, dtoValido.getStatusCode());
-        verificaValores(despesa, dtoValido.getBody());
+        helper.verificaValores(despesa, dtoValido.getBody());
         assertEquals(HttpStatus.NOT_FOUND, dtoIdInvalido.getStatusCode());
-    }
-    
-    private void verificaValores(Despesa despesa, DespesaDto despesaDto) {
-        assertEquals(despesa.getDescricao(), despesaDto.getDescricao());
-        assertEquals(despesa.getValor(), new BigDecimal(despesaDto.getValor()));
-        assertEquals(despesa.getData(), LocalDate.of(despesaDto.getAno(), despesaDto.getMes(), despesaDto.getDia()));
-        assertEquals(despesa.getCategoria(), CategoriaDespesa.definir(despesaDto.getCategoria(), null));
     }
     
     private List<Despesa> filtrar(List<Despesa> despesas, String descricao) {

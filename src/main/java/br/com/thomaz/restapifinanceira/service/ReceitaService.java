@@ -41,7 +41,7 @@ public class ReceitaService{
             return ResponseEntity.notFound().build();   
         }
         
-        Receita atualizada = (Receita) atualizarValores(repository.findById(id).get(), form);
+        Receita atualizada = atualizarValores(repository.findById(id).get(), form);
         
         if (repository.jaPossui(atualizada)) {
             return ResponseEntity.unprocessableEntity().build();
@@ -59,11 +59,11 @@ public class ReceitaService{
         return ResponseEntity.notFound().build();
     }
 
-    private Registro atualizarValores(Registro registro, RegistroForm form) {
-        registro.setDescricao(form.getDescricao());
-        registro.setData(form.getData());
-        registro.setValor(new BigDecimal(form.getValor()));
-        return registro;
+    private Receita atualizarValores(Receita receita, RegistroForm form) {
+        receita.setDescricao(form.getDescricao());
+        receita.setData(form.getData());
+        receita.setValor(new BigDecimal(form.getValor()));
+        return receita;
     }
 
     private ResponseEntity<ReceitaDto> created(Registro registro, String path) {

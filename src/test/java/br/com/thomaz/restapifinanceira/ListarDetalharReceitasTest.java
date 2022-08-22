@@ -7,8 +7,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,8 +21,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.ReceitaController;
-import br.com.thomaz.restapifinanceira.criador.Listas;
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
+import br.com.thomaz.restapifinanceira.helper.Criar;
+import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
 import br.com.thomaz.restapifinanceira.service.ReceitaService;
@@ -34,6 +33,7 @@ class ListarDetalharReceitasTest {
     @Mock private ReceitaRepository repository;
     private MockitoSession session;
     private ReceitaController controller;
+    private TesteHelper helper = new TesteHelper();
 
     @BeforeEach
     void setUp() throws Exception {
@@ -48,7 +48,7 @@ class ListarDetalharReceitasTest {
 
     @Test
     void deveListarTodasReceitas() {
-        List<Receita> receitas = Listas.receitas();
+        List<Receita> receitas = Criar.receitas();
         
         when(repository.findAll()).thenReturn(receitas);
         
@@ -65,7 +65,7 @@ class ListarDetalharReceitasTest {
     
     @Test
     void deveListarPorDescricao() {
-        List<Receita> receitas = Listas.receitas();
+        List<Receita> receitas = Criar.receitas();
         String descricaoValida = "Salário";
         String descricaoInvalida = "salariu";
         when(repository.findByDescricaoIgnoreCase(descricaoValida)).thenReturn(filtrar(receitas, descricaoValida));
@@ -82,7 +82,7 @@ class ListarDetalharReceitasTest {
     }
 
     void deveDetalharUmaReceitaSeIdValido() {
-        Receita receita = Listas.receitas().get(0);
+        Receita receita = Criar.receitas().get(0);
         
         String idValido = "1";
         String idInvalido = "-1";
@@ -98,14 +98,8 @@ class ListarDetalharReceitasTest {
         verify(repository, times(1)).findById(idValido);
         verify(repository, never()).findById(idInvalido);
         assertEquals(HttpStatus.OK, dtoValido.getStatusCode());
-        verificaValores(receita, dtoValido.getBody());
+        helper.verificaValores(receita, dtoValido.getBody());
         assertEquals(HttpStatus.NOT_FOUND, dtoIdInvalido.getStatusCode());
-    }
-    
-    private void verificaValores(Receita receita, ReceitaDto receitaDto) {
-        assertEquals(receita.getDescricao(), receitaDto.getDescricao());
-        assertEquals(receita.getValor(), new BigDecimal(receitaDto.getValor()));
-        assertEquals(receita.getData(), LocalDate.of(receitaDto.getAno(), receitaDto.getMes(), receitaDto.getDia()));
     }
     
     private List<Receita> filtrar(List<Receita> receitas, String descricao) {

@@ -90,7 +90,7 @@ public class RegistroForm {
     }
 
     public void setCategoria(String categoria) {
-        CategoriaDespesa.definir(categoria, CategoriaDespesa.OUTRAS);
+        this.categoria = categoria;
     }
 
     public LocalDate getData() {
