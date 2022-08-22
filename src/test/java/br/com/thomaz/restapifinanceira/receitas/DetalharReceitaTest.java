@@ -1,10 +1,11 @@
-package br.com.thomaz.restapifinanceira;
+package br.com.thomaz.restapifinanceira.receitas;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,50 +13,56 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoSession;
+import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.ReceitaController;
+import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
+import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
 import br.com.thomaz.restapifinanceira.service.ReceitaService;
 
-class ExcluirReceitasTest {
+class DetalharReceitaTest {
 
-    @Mock private ReceitaRepository repository;
-    private TesteHelper helper = new TesteHelper();
+    @Mock
+    private ReceitaRepository repository;
     private MockitoSession session;
     private ReceitaController controller;
+    private TesteHelper verifica = new TesteHelper();
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         session = Mockito.mockitoSession().initMocks(this).startMocking();
         controller = new ReceitaController(repository, new ReceitaService());
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws Exception {
         session.finishMocking();
     }
-    
+
     @Test
-    void naoDeveTentarExcluirSeNaoExiste() {
+    void naoDeveDetalharReceitaSeNaoExistir() {
         String id = "1";
+        
         when(repository.existsById(id)).thenReturn(false);
+        ResponseEntity<ReceitaDto> resposta = controller.detalhar(id);
         
-        var resposta = controller.remover(id);
-        
-        verify(repository, never()).deleteById(id);
-        assertTrue(helper.status404(resposta));
+        verifica.codigo404(resposta);
+        verify(repository, never()).findById(id);
     }
     
     @Test
-    void deveExcluirSeEncontrarId() {
+    void deveDetalharReceitaSeExistir() {
         String id = "1";
+        var receitaOptional = Optional.of(Criar.receita());
         when(repository.existsById(id)).thenReturn(true);
+        when(repository.findById(id)).thenReturn(receitaOptional);
         
-        var resposta = controller.remover(id);
+        ResponseEntity<ReceitaDto> resposta = controller.detalhar(id);
         
-        verify(repository, times(1)).deleteById(id);
-        assertTrue(helper.status200(resposta));
+        verify(repository, times(1)).findById(id);
+        verifica.atributosIguais(receitaOptional.get(), resposta.getBody());
+        verifica.codigo200(resposta);
     }
 }
-

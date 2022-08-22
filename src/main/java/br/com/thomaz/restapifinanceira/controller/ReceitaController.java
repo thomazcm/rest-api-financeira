@@ -45,6 +45,11 @@ public class ReceitaController {
         return service.listar(repository.findByDescricaoIgnoreCase(descricao));
     }
     
+    @GetMapping("/{ano}/{mes}")
+    public ResponseEntity<List<ReceitaDto>> listarPorMes(@PathVariable int ano, @PathVariable int mes){
+        return service.listarPorMes(mes, ano, repository);
+    }
+    
     @GetMapping("/{id}")
     public ResponseEntity<ReceitaDto> detalhar(@PathVariable String id) {
         return service.detalhar(id, repository);

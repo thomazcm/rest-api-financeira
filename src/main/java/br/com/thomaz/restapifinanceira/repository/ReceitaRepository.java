@@ -11,6 +11,8 @@ public interface ReceitaRepository extends MongoRepository<Receita, String>, Reg
 
     List<Receita> findByDescricaoIgnoreCase(String descricao);
     
+    List<Receita> findByDataBetween(LocalDate inicio, LocalDate fim);
+    
     boolean existsByDataBetweenAndDescricaoIgnoreCaseAndIdNot(LocalDate inicio, LocalDate fim, String descricao, String id);
-        
+    
 }

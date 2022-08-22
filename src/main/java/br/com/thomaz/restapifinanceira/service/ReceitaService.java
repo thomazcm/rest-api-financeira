@@ -1,6 +1,7 @@
 package br.com.thomaz.restapifinanceira.service;
 
 import java.math.BigDecimal;
+import java.time.DateTimeException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +58,17 @@ public class ReceitaService{
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    public ResponseEntity<List<ReceitaDto>> listarPorMes(int mes, int ano, ReceitaRepository repository) {
+        try {
+            var periodo = Periodo.doMes(mes, ano);
+            List<ReceitaDto> receitas = listar(repository.findByDataBetween(periodo.ini(), periodo.fim()));
+            return ResponseEntity.ok(receitas);
+            
+        } catch (DateTimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     private Receita atualizarValores(Receita receita, RegistroForm form) {

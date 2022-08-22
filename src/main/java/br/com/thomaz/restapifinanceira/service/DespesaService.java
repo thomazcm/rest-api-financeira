@@ -1,6 +1,7 @@
 package br.com.thomaz.restapifinanceira.service;
 
 import java.math.BigDecimal;
+import java.time.DateTimeException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,17 @@ public class DespesaService {
         return despesas.stream().map(DespesaDto::new).collect(Collectors.toList());
     }
     
+    public ResponseEntity<List<DespesaDto>> listarPorMes(int mes, int ano, DespesaRepository repository) {
+        try {
+            var periodo = Periodo.doMes(mes, ano);
+            List<DespesaDto> despesas = listar(repository.findByDataBetween(periodo.ini(), periodo.fim()));
+            return ResponseEntity.ok(despesas);
+            
+        } catch (DateTimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     public ResponseEntity<DespesaDto> detalhar(String id, DespesaRepository repository) {
         if (repository.existsById(id)) {
             return ResponseEntity.ok(new DespesaDto(repository.findById(id).get()));

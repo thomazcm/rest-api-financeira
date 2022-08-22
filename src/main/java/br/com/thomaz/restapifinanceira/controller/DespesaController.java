@@ -45,6 +45,11 @@ public class DespesaController {
         return service.listar(repository.findByDescricaoIgnoreCase(descricao));
     }
     
+    @GetMapping
+    public ResponseEntity<List<DespesaDto>> listarPorMes(@PathVariable int ano, @PathVariable int mes) {
+        return service.listarPorMes(mes, ano, repository);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<DespesaDto> detalhar(@PathVariable String id) {
         return service.detalhar(id, repository);

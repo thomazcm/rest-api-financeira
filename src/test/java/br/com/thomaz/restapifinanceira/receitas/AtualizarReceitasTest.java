@@ -1,7 +1,5 @@
-package br.com.thomaz.restapifinanceira;
+package br.com.thomaz.restapifinanceira.receitas;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -15,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoSession;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.ReceitaController;
@@ -31,7 +28,7 @@ class AtualizarReceitasTest {
     @Mock private ReceitaRepository repository;
     private MockitoSession session;
     private ReceitaController controller;
-    private TesteHelper helper = new TesteHelper();
+    private TesteHelper verifica = new TesteHelper();
 
     @BeforeEach
     void setUp() {
@@ -55,7 +52,7 @@ class AtualizarReceitasTest {
         verify(repository, never()).findById(id);
         verify(repository, never()).jaPossui(Mockito.any());
         verify(repository, never()).save(Mockito.any());
-        assertTrue(helper.status404(resposta));
+        verifica.codigo404(resposta);
     }
     
     @Test
@@ -73,7 +70,7 @@ class AtualizarReceitasTest {
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).jaPossui(receita);
         verify(repository, never()).save(Mockito.any());
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, resposta.getStatusCode());
+        verifica.codigo422(resposta);
     }
     
     @Test
@@ -92,8 +89,8 @@ class AtualizarReceitasTest {
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).jaPossui(receita);
         verify(repository, times(1)).save(receita);
-        assertEquals(HttpStatus.OK, resposta.getStatusCode());
-        helper.verificaValores(receitaValoresAtualizados, resposta.getBody());
+        verifica.codigo200(resposta);
+        verifica.atributosIguais(receitaValoresAtualizados, resposta.getBody());
     }
     
     
