@@ -7,11 +7,6 @@ public class Periodo {
     private final LocalDate inicio;
     private final LocalDate fim;
     
-    private Periodo(LocalDate inicio, LocalDate fim) {
-        this.inicio = inicio;
-        this.fim = fim;
-    }
-
     public static Periodo doMes(int mes, int ano) {
         LocalDate inicio = LocalDate.of(ano, mes, 1).minusDays(1);
         LocalDate fim = diaUmProximoMes(ano, mes);
@@ -27,20 +22,25 @@ public class Periodo {
         return new Periodo(inicio, fim);
     }
 
+    public LocalDate ini() {
+        return inicio;
+    }
+
+    public LocalDate fim() {
+        return fim;
+    }
+
+    private Periodo(LocalDate inicio, LocalDate fim) {
+        this.inicio = inicio;
+        this.fim = fim;
+    }
+
     private static LocalDate diaUmProximoMes(int ano, int mes) {
         if (mes == 12) {
             ano++;
             mes = 0;
         }
         LocalDate fim = LocalDate.of(ano, mes+1, 1);
-        return fim;
-    }
-    
-    public LocalDate ini() {
-        return inicio;
-    }
-    
-    public LocalDate fim() {
         return fim;
     }
     
