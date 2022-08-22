@@ -24,9 +24,9 @@ import br.com.thomaz.restapifinanceira.controller.ReceitaController;
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
+import br.com.thomaz.restapifinanceira.model.Periodo;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
-import br.com.thomaz.restapifinanceira.service.Periodo;
 import br.com.thomaz.restapifinanceira.service.ReceitaService;
 
 class ListarReceitasTest {

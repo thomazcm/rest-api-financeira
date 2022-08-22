@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
 import br.com.thomaz.restapifinanceira.form.RegistroForm;
+import br.com.thomaz.restapifinanceira.model.Periodo;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.model.Registro;
 import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;

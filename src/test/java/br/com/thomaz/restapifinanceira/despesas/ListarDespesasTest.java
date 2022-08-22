@@ -25,8 +25,8 @@ import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.model.Despesa;
+import br.com.thomaz.restapifinanceira.model.Periodo;
 import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
-import br.com.thomaz.restapifinanceira.service.Periodo;
 import br.com.thomaz.restapifinanceira.service.DespesaService;
 
 class ListarDespesasTest {

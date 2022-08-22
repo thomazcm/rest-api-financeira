@@ -50,10 +50,6 @@ public class Criador {
         Registro registro;
         if (receitas.isEmpty()) {
            registro = despesas.get(0);
-           System.out.println("===========");
-           System.out.println("Descricao "+registro.getDescricao());
-           System.out.println("Categoria"+ registro.getCategoria());
-           System.out.println(CategoriaDespesa.nome(registro.getCategoria()));
            form.setCategoria(CategoriaDespesa.nome(registro.getCategoria()));
         } else {
             registro = receitas.get(0);

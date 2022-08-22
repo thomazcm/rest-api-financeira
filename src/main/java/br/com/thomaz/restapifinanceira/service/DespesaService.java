@@ -13,6 +13,7 @@ import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 import br.com.thomaz.restapifinanceira.model.Despesa;
+import br.com.thomaz.restapifinanceira.model.Periodo;
 import br.com.thomaz.restapifinanceira.model.Registro;
 import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
 

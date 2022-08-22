@@ -1,13 +1,11 @@
-package br.com.thomaz.restapifinanceira.service;
+package br.com.thomaz.restapifinanceira.model;
 
 import java.time.LocalDate;
 
-import br.com.thomaz.restapifinanceira.model.Registro;
-
 public class Periodo {
 
-    private LocalDate inicio;
-    private LocalDate fim;
+    private final LocalDate inicio;
+    private final LocalDate fim;
     
     private Periodo(LocalDate inicio, LocalDate fim) {
         this.inicio = inicio;
