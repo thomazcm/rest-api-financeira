@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import br.com.thomaz.restapifinanceira.model.Despesa;
-import br.com.thomaz.restapifinanceira.model.Receita;
 
 public interface DespesaRepository extends MongoRepository<Despesa, String>, RegistroRepository{
     
