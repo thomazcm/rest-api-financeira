@@ -72,7 +72,7 @@ class AtualizarDespesasTest {
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).jaPossui(despesa);
         verify(repository, never()).save(Mockito.any());
-        verifica.codigo422(resposta);
+        verifica.codigo400(resposta);
     }
     
     @Test

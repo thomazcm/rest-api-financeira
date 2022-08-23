@@ -3,14 +3,14 @@ package br.com.thomaz.restapifinanceira.dto;
 import br.com.thomaz.restapifinanceira.model.Registro;
 
 public class ReceitaDto {
-    
+
     private String id;
     private String descricao;
     private Double valor;
     private int dia;
     private int mes;
     private int ano;
-    
+
     public ReceitaDto(Registro registro) {
         this.id = registro.getId();
         this.descricao = registro.getDescricao();
@@ -19,7 +19,7 @@ public class ReceitaDto {
         this.mes = registro.getMes();
         this.ano = registro.getAno();
     }
-    
+
     public String getId() {
         return id;
     }

@@ -85,10 +85,10 @@ class ListarReceitasTest {
     }
 
     @Test
-    void deveRetornarNaoEncontradoSeDataInvalida() {
+    void deveRetornar400DataInvalida() {
         ResponseEntity<List<ReceitaDto>> resposta = controller.listarPorMes(2022, 13);
         verify(repository, never()).findByDataBetween(any(), any());
-        verifica.codigo404(resposta);
+        verifica.codigo400(resposta);
     }
 
     private List<Receita> filtrar(List<Receita> receitas, Periodo periodo) {

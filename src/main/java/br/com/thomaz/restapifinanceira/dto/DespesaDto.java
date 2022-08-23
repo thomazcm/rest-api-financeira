@@ -4,7 +4,7 @@ import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 import br.com.thomaz.restapifinanceira.model.Registro;
 
 public class DespesaDto {
-    
+
     private String id;
     private String descricao;
     private Double valor;
@@ -12,7 +12,7 @@ public class DespesaDto {
     private int mes;
     private int ano;
     private String categoria;
-    
+
     public DespesaDto(Registro registro) {
         this.id = registro.getId();
         this.descricao = registro.getDescricao();
@@ -22,7 +22,7 @@ public class DespesaDto {
         this.ano = registro.getAno();
         this.categoria = CategoriaDespesa.nome(registro.getCategoria());
     }
-    
+
     public String getId() {
         return id;
     }
@@ -46,7 +46,7 @@ public class DespesaDto {
     public int getAno() {
         return ano;
     }
-    
+
     public String getCategoria() {
         return categoria;
     }

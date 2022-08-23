@@ -20,14 +20,14 @@ import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
 @Service
 public class ResumoService {
 
-    public ResponseEntity<ResumoMesDto> gerarResumo(int anoInt, int mesInt, ReceitaRepository receitaRepository,
+    public ResponseEntity<ResumoMesDto> gerarResumo(int ano, int mesInt, ReceitaRepository receitaRepository,
             DespesaRepository despesaRepository) {
         
         Periodo mes;
         try {
-            mes = Periodo.doMes(mesInt, anoInt);
+            mes = Periodo.doMes(mesInt, ano);
         } catch (DateTimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
         
         var receitasDoMes = receitaRepository.findByDataBetween(mes.ini(), mes.fim());
@@ -46,14 +46,10 @@ public class ResumoService {
             var categoriaDespesa = despesa.getCategoria();
             BigDecimal valorDespesa = despesa.getValor();
             BigDecimal totalCategoria = gastosPorCategoria.get(categoriaDespesa);
-            
-            if (totalCategoria == null) {
-                gastosPorCategoria.put(categoriaDespesa, valorDespesa);
-            } else {
-                gastosPorCategoria.put(categoriaDespesa, totalCategoria.add(valorDespesa));
-            }
+            gastosPorCategoria.put
+            (categoriaDespesa, totalCategoria == null ? valorDespesa : totalCategoria.add(valorDespesa));
         });
-        
+
         return gastosPorCategoria;
     }
 

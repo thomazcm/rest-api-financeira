@@ -44,24 +44,25 @@ public class DespesaController {
         }
         return service.listar(repository.findByDescricaoIgnoreCase(descricao));
     }
-    
+
     @GetMapping("/{ano}/{mes}")
-    public ResponseEntity<List<DespesaDto>> listarPorMes(@PathVariable int ano, @PathVariable int mes) {
-        return service.listarPorMes(mes, ano, repository);
+    public ResponseEntity<List<DespesaDto>> listarPorMes(@PathVariable int ano, @PathVariable int mesInt) {
+        return service.listarPorMes(mesInt, ano, repository);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DespesaDto> detalhar(@PathVariable String id) {
         return service.detalhar(id, repository);
     }
-    
+
     @PutMapping("/{id}")
-    public ResponseEntity<DespesaDto> atualizar(@PathVariable String id, @Valid @RequestBody RegistroForm form){
+    public ResponseEntity<DespesaDto> atualizar(@PathVariable String id,
+            @Valid @RequestBody RegistroForm form) {
         return service.atualizar(id, repository, form);
     }
-    
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> remover(@PathVariable String id){
+    public ResponseEntity<?> remover(@PathVariable String id) {
         return service.remover(id, repository);
     }
 

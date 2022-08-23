@@ -19,25 +19,25 @@ import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
 
 @Service
 public class DespesaService {
-    
+
     public ResponseEntity<DespesaDto> criar(Despesa despesa, DespesaRepository repository) {
         if (repository.jaPossui(despesa)) {
-            return ResponseEntity.unprocessableEntity().build();
+            return ResponseEntity.badRequest().build();
         }
         repository.save(despesa);
-        return created(despesa, "despesas/{id}");
+        return created(despesa);
     }
-    
-    public List<DespesaDto> listar (List<Despesa> despesas){
+
+    public List<DespesaDto> listar(List<Despesa> despesas) {
         return despesas.stream().map(DespesaDto::new).collect(Collectors.toList());
     }
-    
+
     public ResponseEntity<List<DespesaDto>> listarPorMes(int mes, int ano, DespesaRepository repository) {
         try {
             var periodo = Periodo.doMes(mes, ano);
             List<DespesaDto> despesas = listar(repository.findByDataBetween(periodo.ini(), periodo.fim()));
             return ResponseEntity.ok(despesas);
-            
+
         } catch (DateTimeException e) {
             return ResponseEntity.notFound().build();
         }
@@ -52,19 +52,18 @@ public class DespesaService {
 
     public ResponseEntity<DespesaDto> atualizar(String id, DespesaRepository repository, RegistroForm form) {
         if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();   
+            return ResponseEntity.notFound().build();
         }
-        
-        Despesa atualizada = atualizarValores(repository.findById(id).get(), form);
-        
-        if (repository.jaPossui(atualizada)) {
-            return ResponseEntity.unprocessableEntity().build();
+        var despesaAtualizada = atualizarValores(repository.findById(id).get(), form);
+
+        if (repository.jaPossui(despesaAtualizada)) {
+            return ResponseEntity.badRequest().build();
         }
+        repository.save(despesaAtualizada);
         
-        repository.save(atualizada);
-        return ResponseEntity.ok(new DespesaDto(atualizada));
+        return ResponseEntity.ok(new DespesaDto(despesaAtualizada));
     }
-    
+
     public ResponseEntity<?> remover(String id, DespesaRepository repository) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
@@ -72,7 +71,7 @@ public class DespesaService {
         }
         return ResponseEntity.notFound().build();
     }
-    
+
     private Despesa atualizarValores(Despesa despesa, RegistroForm form) {
         despesa.setDescricao(form.getDescricao());
         despesa.setData(form.getData());
@@ -81,9 +80,11 @@ public class DespesaService {
         return despesa;
     }
 
-    private ResponseEntity<DespesaDto> created(Registro registro, String path) {
-        return ResponseEntity.created(UriComponentsBuilder.fromPath(path).buildAndExpand(registro.getId()).toUri())
+    private ResponseEntity<DespesaDto> created(Registro registro) {
+        return ResponseEntity
+                .created(UriComponentsBuilder.fromPath("despesas/{id}")
+                        .buildAndExpand(registro.getId()).toUri())
                 .body(new DespesaDto(registro));
     }
-    
+
 }

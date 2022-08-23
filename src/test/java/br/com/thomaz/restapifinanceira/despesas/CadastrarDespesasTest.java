@@ -14,7 +14,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoSession;
-import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.DespesaController;
@@ -68,7 +67,7 @@ class CadastrarDespesasTest {
         var resposta = controller.criar(form);
         
         verify(repository, never()).save(Mockito.any());
-        verifica.codigo422(resposta);
+        verifica.codigo400(resposta);
     }
     
     @Test
@@ -77,7 +76,7 @@ class CadastrarDespesasTest {
             var form = Criar.formDataInvalida();
             controller.criar(form);
             fail();
-        } catch(BeanCreationException e){
+        } catch(RuntimeException e){
         }
     }
    

@@ -13,6 +13,7 @@ public interface DespesaRepository extends MongoRepository<Despesa, String>, Reg
     
     List<Despesa> findByDataBetween(LocalDate inicio, LocalDate fim);
     
-    boolean existsByDataBetweenAndDescricaoIgnoreCaseAndIdNot(LocalDate inicio, LocalDate fim, String descricao, String id);
+    boolean existsByDataBetweenAndDescricaoIgnoreCaseAndIdNot(LocalDate inicio, LocalDate fim,
+                                                                    String descricao, String id);
 
 }

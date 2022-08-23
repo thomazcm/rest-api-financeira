@@ -11,8 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
-import org.springframework.beans.factory.BeanCreationException;
-
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;
@@ -97,7 +95,7 @@ public class RegistroForm {
         try {
             return LocalDate.of(getAno(), getMes(), getDia());
         } catch (DateTimeException e) {
-            throw new BeanCreationException("Erro ao salvar registro, data inválida");
+            throw new RuntimeException("Erro ao salvar registro, data inválida");
         }
     }
 

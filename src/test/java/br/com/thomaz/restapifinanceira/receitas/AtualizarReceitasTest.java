@@ -70,7 +70,7 @@ class AtualizarReceitasTest {
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).jaPossui(receita);
         verify(repository, never()).save(Mockito.any());
-        verifica.codigo422(resposta);
+        verifica.codigo400(resposta);
     }
     
     @Test

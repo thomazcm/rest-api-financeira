@@ -27,12 +27,20 @@ public interface Registro {
     }
     
     default CategoriaDespesa getCategoria() {
-        var despesa = (Despesa) this;
-        return despesa.getCategoria();
+        try {
+            var despesa = (Despesa) this;
+            return despesa.getCategoria();
+        } catch (ClassCastException e) {
+            return null;
+        }
     }
     
     default void setCategoria(CategoriaDespesa categoria) {
-        var despesa = (Despesa) this;
-        despesa.setCategoria(categoria);
+        try {
+            var despesa = (Despesa) this;
+            despesa.setCategoria(categoria);
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
     }
 }

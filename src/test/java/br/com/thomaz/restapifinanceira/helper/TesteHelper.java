@@ -35,20 +35,20 @@ public class TesteHelper {
         assertEquals(registro1.getData(), registro2.getData());
     }
 
-    public void codigo404(ResponseEntity<?> resposta) {
-        assertEquals(404, resposta.getStatusCodeValue());
-    }
-
     public void codigo200(ResponseEntity<?> resposta) {
         assertEquals(200, resposta.getStatusCodeValue());
     }
 
-    public void codigo422(ResponseEntity<?> resposta) {
-        assertEquals(422, resposta.getStatusCodeValue());
-    }
-    
     public void codigo201(ResponseEntity<?> resposta) {
         assertEquals(201, resposta.getStatusCodeValue());
+    }
+
+    public void codigo400(ResponseEntity<?> resposta) {
+        assertEquals(400, resposta.getStatusCodeValue());
+    }
+
+    public void codigo404(ResponseEntity<?> resposta) {
+        assertEquals(404, resposta.getStatusCodeValue());
     }
     
 }

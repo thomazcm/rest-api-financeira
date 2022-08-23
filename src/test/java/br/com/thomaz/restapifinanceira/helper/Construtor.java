@@ -11,12 +11,12 @@ import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.model.Registro;
 
-public class Criador {
+public class Construtor {
     private List<Receita> receitas = new ArrayList<>();
     private List<Despesa> despesas = new ArrayList<>();
     static int id = 1;
     
-    public Criador receita(String descricao, double valor, int dia, int mes, int ano) {
+    public Construtor receita(String descricao, double valor, int dia, int mes, int ano) {
         var receita = new Receita(descricao, new BigDecimal(valor), LocalDate.of(ano, mes, dia));
         receita.setId(String.valueOf(id));
         id++;
@@ -24,7 +24,7 @@ public class Criador {
         return this;
     }
     
-    public Criador despesa(String descricao, double valor, int dia, int mes, int ano, String categoria) {
+    public Construtor despesa(String descricao, double valor, int dia, int mes, int ano, String categoria) {
         var despesa = new Despesa(descricao, new BigDecimal(valor), 
                 LocalDate.of(ano, mes, dia), CategoriaDespesa.definir(categoria, CategoriaDespesa.OUTRAS));
         despesa.setId(String.valueOf(id));
