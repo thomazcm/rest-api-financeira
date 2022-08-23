@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.thomaz</groupId>
 	<artifactId>rest-api-financeira</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>rest-api-financeira</name>
 	<description>Api rest para controle de finanças pessoais</description>
 	<properties>

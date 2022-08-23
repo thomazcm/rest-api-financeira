@@ -7,15 +7,20 @@ import br.com.thomaz.restapifinanceira.model.Registro;
 
 public interface RegistroRepository {
 
-    boolean existsByDataBetweenAndDescricaoIgnoreCaseAndIdNot(LocalDate inicio, LocalDate fim,
-                                                                    String descricao, String id);
-
+    void deleteById(String id);
     boolean existsById(String id);
+    boolean existsByDataBetweenAndDescricaoIgnoreCaseAndIdNot
+                        (LocalDate inicio, LocalDate fim, String descricao, String id);
 
-    default boolean jaPossui(Registro registro) {
+    
+    default Registro verificaSeAceita(Registro registro) {
         var mes = Periodo.doRegistro(registro);
-        return existsByDataBetweenAndDescricaoIgnoreCaseAndIdNot(mes.ini(), mes.fim(),
-                registro.getDescricao(), registro.getId());
+        var descricao = registro.getDescricao();
+        var id = registro.getId();
+        if (existsByDataBetweenAndDescricaoIgnoreCaseAndIdNot(mes.ini(), mes.fim(), descricao, id)) {
+            throw new IllegalArgumentException();
+        }
+        return registro;
     }
-
+    
 }

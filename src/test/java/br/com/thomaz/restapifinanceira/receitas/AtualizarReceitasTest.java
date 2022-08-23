@@ -1,5 +1,6 @@
 package br.com.thomaz.restapifinanceira.receitas;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -16,24 +17,26 @@ import org.mockito.MockitoSession;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.ReceitaController;
+import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
+import br.com.thomaz.restapifinanceira.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
-import br.com.thomaz.restapifinanceira.service.ReceitaService;
 
 class AtualizarReceitasTest {
+    private MockitoSession session;
+    private TesteHelper verifica = new TesteHelper();
+    private ReceitaController controller;
 
     @Mock private ReceitaRepository repository;
-    private MockitoSession session;
-    private ReceitaController controller;
-    private TesteHelper verifica = new TesteHelper();
+    
 
     @BeforeEach
     void setUp() {
         session = Mockito.mockitoSession().initMocks(this).startMocking();
-        controller = new ReceitaController(repository, new ReceitaService());
+        controller = new ReceitaController(repository, new RegistroControllerHelper());
     }
 
     @AfterEach
@@ -44,13 +47,13 @@ class AtualizarReceitasTest {
     @Test
     void naoDeveAtualizarSeNaoExiste(){
         String id = "1";
-        var receitaForm = Criar.receitaForm();
+        RegistroForm receitaForm = Criar.receitaForm();
         when(repository.existsById(id)).thenReturn(false);
         
         ResponseEntity<ReceitaDto> resposta = controller.atualizar(id, receitaForm);
         
         verify(repository, never()).findById(id);
-        verify(repository, never()).jaPossui(Mockito.any());
+        verify(repository, never()).verificaSeAceita(Mockito.any());
         verify(repository, never()).save(Mockito.any());
         verifica.codigo404(resposta);
     }
@@ -63,14 +66,16 @@ class AtualizarReceitasTest {
         when(repository.existsById(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(receitaOptional);
         var receita = receitaOptional.get();
-        when(repository.jaPossui(receita)).thenReturn(true);
+        when(repository.verificaSeAceita(Mockito.any())).thenThrow(IllegalArgumentException.class);
         
-        ResponseEntity<ReceitaDto> resposta = controller.atualizar(id, receitaForm);
-        
-        verify(repository, times(1)).findById(id);
-        verify(repository, times(1)).jaPossui(receita);
-        verify(repository, never()).save(Mockito.any());
-        verifica.codigo400(resposta);
+        try {
+            controller.atualizar(id, receitaForm);
+            fail();
+        } catch (IllegalArgumentException e) {
+            verify(repository, times(1)).findById(id);
+            verify(repository, times(1)).verificaSeAceita(receita);
+            verify(repository, never()).save(Mockito.any());
+        }
     }
     
     @Test
@@ -78,21 +83,20 @@ class AtualizarReceitasTest {
         String id = "1";
         var receitaForm = Criar.receitaForm();
         var receitaValoresAtualizados = receitaForm.toReceita();
-        Optional<Receita> receitaOptional = Optional.of(Criar.receita());
+        var receita = Criar.receita();
+        var receitaOptional = Optional.of(receita);
         when(repository.existsById(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(receitaOptional);
-        var receita = receitaOptional.get();
-        when(repository.jaPossui(receita)).thenReturn(false);
+        when(repository.verificaSeAceita(Mockito.any())).thenReturn(receita);
+        when(repository.save(Mockito.any())).thenReturn(receita);
         
         ResponseEntity<ReceitaDto> resposta = controller.atualizar(id, receitaForm);
         
         verify(repository, times(1)).findById(id);
-        verify(repository, times(1)).jaPossui(receita);
+        verify(repository, times(1)).verificaSeAceita(receita);
         verify(repository, times(1)).save(receita);
         verifica.codigo200(resposta);
         verifica.atributosIguais(receitaValoresAtualizados, resposta.getBody());
     }
-    
-    
 }
 

@@ -2,12 +2,13 @@ package br.com.thomaz.restapifinanceira.receitas;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,13 +22,13 @@ import org.mockito.MockitoSession;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.ReceitaController;
+import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
-import br.com.thomaz.restapifinanceira.model.Periodo;
 import br.com.thomaz.restapifinanceira.model.Receita;
+import br.com.thomaz.restapifinanceira.model.Periodo;
 import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
-import br.com.thomaz.restapifinanceira.service.ReceitaService;
 
 class ListarReceitasTest {
 
@@ -40,7 +41,7 @@ class ListarReceitasTest {
     @BeforeEach
     void setUp() throws Exception {
         session = Mockito.mockitoSession().initMocks(this).startMocking();
-        controller = new ReceitaController(repository, new ReceitaService());
+        controller = new ReceitaController(repository, new RegistroControllerHelper());
     }
 
     @AfterEach
@@ -52,7 +53,7 @@ class ListarReceitasTest {
     void deveListarTodasReceitasSeDescricaoNula() {
         when(repository.findAll()).thenReturn(Criar.receitas());
         
-        List<ReceitaDto> receitas = controller.listar(null);
+        List<ReceitaDto> receitas = controller.listar(null).getBody();
         
         verify(repository, times(1)).findAll();
         assertEquals(5, receitas.size());
@@ -64,7 +65,7 @@ class ListarReceitasTest {
         List<Receita> receitas = Criar.receitas();
         Mockito.when(repository.findByDescricaoIgnoreCase(Mockito.anyString())).thenReturn(filtrar(receitas, descricao));
         
-        List<ReceitaDto> receitasFiltradas = controller.listar(descricao);
+        List<ReceitaDto> receitasFiltradas = controller.listar(descricao).getBody();
         verify(repository, times(1)).findByDescricaoIgnoreCase(descricao);
         assertEquals(3, receitasFiltradas.size());
         assertTrue(receitasFiltradas.stream().allMatch(r -> r.getDescricao().equals(descricao)));
@@ -85,10 +86,13 @@ class ListarReceitasTest {
     }
 
     @Test
-    void deveRetornar400DataInvalida() {
-        ResponseEntity<List<ReceitaDto>> resposta = controller.listarPorMes(2022, 13);
-        verify(repository, never()).findByDataBetween(any(), any());
-        verifica.codigo400(resposta);
+    void deveRetornarNaoEncontradoSeDataInvalida() {
+        try {
+            controller.listarPorMes(2022, 13);
+            fail();
+        } catch(DateTimeException e) {
+            verifyNoInteractions(repository);
+        }
     }
 
     private List<Receita> filtrar(List<Receita> receitas, Periodo periodo) {

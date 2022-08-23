@@ -16,11 +16,11 @@ import org.mockito.MockitoSession;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.DespesaController;
+import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
-import br.com.thomaz.restapifinanceira.service.DespesaService;
 
 class DetalharDespesaTest {
 
@@ -33,7 +33,7 @@ class DetalharDespesaTest {
     @BeforeEach
     void setUp() throws Exception {
         session = Mockito.mockitoSession().initMocks(this).startMocking();
-        controller = new DespesaController(repository, new DespesaService());
+        controller = new DespesaController(repository, new RegistroControllerHelper());
     }
 
     @AfterEach

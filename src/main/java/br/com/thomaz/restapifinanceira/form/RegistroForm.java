@@ -1,7 +1,6 @@
 package br.com.thomaz.restapifinanceira.form;
 
 import java.math.BigDecimal;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 
 import javax.validation.constraints.Max;
@@ -16,31 +15,21 @@ import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;
 
 public class RegistroForm {
-    @NotBlank
-    private String descricao;
-    @NotNull
-    @PositiveOrZero
-    private Double valor;
-    @NotNull
-    @Positive
-    @Max(31)
-    private Integer dia;
-    @NotNull
-    @Positive
-    @Max(12)
-    private Integer mes;
-    @NotNull
-    @Min(1900)
-    @Max(2100)
-    private Integer ano;
+    
+    @NotBlank private String descricao;
+    @NotNull @PositiveOrZero private Double valor;
+    @NotNull @Positive @Max(31) private Integer dia;
+    @NotNull @Positive @Max(12) private Integer mes;
+    @NotNull @Min(1900) @Max(2100) private Integer ano;
+    
     private String categoria;
 
     public Receita toReceita() {
-        return new Receita(descricao, new BigDecimal(valor), getData());
+        return new Receita(descricao, new BigDecimal(valor), gerarData());
     }
 
     public Despesa toDespesa() {
-        return new Despesa(descricao, new BigDecimal(valor), getData(), CategoriaDespesa.definir(categoria, CategoriaDespesa.OUTRAS));
+        return new Despesa(descricao, new BigDecimal(valor), gerarData(), gerarCategoria());
     }
 
     public String getDescricao() {
@@ -91,12 +80,12 @@ public class RegistroForm {
         this.categoria = categoria;
     }
 
-    public LocalDate getData() {
-        try {
-            return LocalDate.of(getAno(), getMes(), getDia());
-        } catch (DateTimeException e) {
-            throw new RuntimeException("Erro ao salvar registro, data inválida");
-        }
+    public LocalDate gerarData() {
+        return LocalDate.of(getAno(), getMes(), getDia());
+    }
+    
+    public CategoriaDespesa gerarCategoria() {
+        return CategoriaDespesa.definir(categoria, CategoriaDespesa.OUTRAS);
     }
 
 }

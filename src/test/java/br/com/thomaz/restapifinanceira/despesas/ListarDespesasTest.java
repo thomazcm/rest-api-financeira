@@ -2,12 +2,13 @@ package br.com.thomaz.restapifinanceira.despesas;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,13 +22,13 @@ import org.mockito.MockitoSession;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.DespesaController;
+import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Periodo;
 import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
-import br.com.thomaz.restapifinanceira.service.DespesaService;
 
 class ListarDespesasTest {
 
@@ -40,7 +41,7 @@ class ListarDespesasTest {
     @BeforeEach
     void setUp() throws Exception {
         session = Mockito.mockitoSession().initMocks(this).startMocking();
-        controller = new DespesaController(repository, new DespesaService());
+        controller = new DespesaController(repository, new RegistroControllerHelper());
     }
 
     @AfterEach
@@ -52,7 +53,7 @@ class ListarDespesasTest {
     void deveListarTodasDespesasSeDescricaoNula() {
         when(repository.findAll()).thenReturn(Criar.despesas());
         
-        List<DespesaDto> despesas = controller.listar(null);
+        List<DespesaDto> despesas = controller.listar(null).getBody();
         
         verify(repository, times(1)).findAll();
         assertEquals(5, despesas.size());
@@ -64,7 +65,7 @@ class ListarDespesasTest {
         List<Despesa> despesas = Criar.despesas();
         Mockito.when(repository.findByDescricaoIgnoreCase(Mockito.anyString())).thenReturn(filtrar(despesas, descricao));
         
-        List<DespesaDto> despesasFiltradas = controller.listar(descricao);
+        List<DespesaDto> despesasFiltradas = controller.listar(descricao).getBody();
         verify(repository, times(1)).findByDescricaoIgnoreCase(descricao);
         assertEquals(3, despesasFiltradas.size());
         assertTrue(despesasFiltradas.stream().allMatch(r -> r.getDescricao().equals(descricao)));
@@ -86,9 +87,12 @@ class ListarDespesasTest {
 
     @Test
     void deveRetornarNaoEncontradoSeDataInvalida() {
-        ResponseEntity<List<DespesaDto>> resposta = controller.listarPorMes(2022, 13);
-        verify(repository, never()).findByDataBetween(any(), any());
-        verifica.codigo404(resposta);
+        try {
+            controller.listarPorMes(2022, 13);
+            fail();
+        } catch(DateTimeException e) {
+            verifyNoInteractions(repository);
+        }
     }
 
     private List<Despesa> filtrar(List<Despesa> despesas, Periodo periodo) {

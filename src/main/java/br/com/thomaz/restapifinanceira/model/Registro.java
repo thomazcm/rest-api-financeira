@@ -43,4 +43,8 @@ public interface Registro {
             e.printStackTrace();
         }
     }
+    
+    default boolean ehDespesa() {
+        return this.getCategoria() != null;
+    }
 }

@@ -1,10 +1,14 @@
 package br.com.thomaz.restapifinanceira.receitas;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+
+import java.time.DateTimeException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,15 +21,14 @@ import org.mockito.MockitoSession;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.ReceitaController;
+import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
-import br.com.thomaz.restapifinanceira.service.ReceitaService;
 
 class CadastrarReceitasTest {
-
     private TesteHelper verifica = new TesteHelper();
     private MockitoSession session;
     
@@ -36,7 +39,7 @@ class CadastrarReceitasTest {
     @BeforeEach
     void setUp() {
         session = Mockito.mockitoSession().initMocks(this).startMocking();
-        controller = new ReceitaController(repository, new ReceitaService());
+        controller = new ReceitaController(repository, new RegistroControllerHelper());
     }
 
     @AfterEach
@@ -49,14 +52,17 @@ class CadastrarReceitasTest {
         var form = Criar.receitaForm();
         var toReceita = form.toReceita();
         
-        when(repository.jaPossui(Mockito.any())).thenReturn(false);
+        when(repository.verificaSeAceita(Mockito.any())).thenReturn(toReceita);
+        when(repository.save(any(Receita.class))).thenReturn(toReceita);
         
-        ResponseEntity<ReceitaDto> resposta = controller.criar(form);
-        verify(repository, times(1)).jaPossui(captor.capture());
+        ResponseEntity<ReceitaDto> resposta = controller.cadastrar(form);
+        
+        verify(repository, times(1)).save(captor.capture());
         Receita receitaASalvar = captor.getValue();
         
-        verify(repository, times(1)).save(receitaASalvar);
-        verifica.atributosIguais(toReceita, receitaASalvar);
+        verify(repository, times(1)).verificaSeAceita(any(Receita.class));
+        
+        verifica.atributosIguais(form, receitaASalvar);
         verifica.atributosIguais(toReceita, resposta.getBody());
         verifica.codigo201(resposta);
     }
@@ -64,21 +70,26 @@ class CadastrarReceitasTest {
     @Test
     void naoDeveCadastrarReceitaSeJaExiste() {
         var form = Criar.receitaForm();
-        when(repository.jaPossui(Mockito.any())).thenReturn(true);
-        var resposta = controller.criar(form);
+        when(repository.verificaSeAceita(Mockito.any())).thenThrow(IllegalArgumentException.class);
         
-        verify(repository, never()).save(Mockito.any());
-        verifica.codigo400(resposta);
+        try {
+            controller.cadastrar(form);
+            fail();
+        } catch (IllegalArgumentException e) {
+            verify(repository, never()).save(Mockito.any(Receita.class));
+        }
     }
     
     @Test
     void deveLancarExcecaoDataInvalida() {
         try {
             var form = Criar.formDataInvalida();
-            controller.criar(form);
+            controller.cadastrar(form);
             fail();
-        } catch(RuntimeException e){
+        } catch(DateTimeException e){
+            verifyNoInteractions(repository);
         }
     }
+   
 }
 

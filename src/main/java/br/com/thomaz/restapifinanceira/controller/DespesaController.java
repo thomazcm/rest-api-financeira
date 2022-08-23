@@ -15,55 +15,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.form.RegistroForm;
+import br.com.thomaz.restapifinanceira.model.Despesa;
+import br.com.thomaz.restapifinanceira.model.Periodo;
 import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
-import br.com.thomaz.restapifinanceira.service.DespesaService;
 
 @RestController
 @RequestMapping("/despesas")
 public class DespesaController {
+    
     private DespesaRepository repository;
-    private DespesaService service;
+    private RegistroControllerHelper helper;
 
     @Autowired
-    public DespesaController(DespesaRepository repository, DespesaService service) {
+    public DespesaController(DespesaRepository repository, RegistroControllerHelper helper) {
         this.repository = repository;
-        this.service = service;
+        this.helper = helper;
     }
 
     @PostMapping
-    public ResponseEntity<DespesaDto> criar(@Valid @RequestBody RegistroForm form) {
-        return service.criar(form.toDespesa(), repository);
+    public ResponseEntity<DespesaDto> cadastrar(@Valid @RequestBody RegistroForm form) {
+        var despesa = (Despesa) repository.verificaSeAceita(form.toDespesa());
+        return helper.created(repository.save(despesa));
     }
 
     @GetMapping
-    public List<DespesaDto> listar(String descricao) {
+    public ResponseEntity<List<DespesaDto>> listar(String descricao) {
         if (descricao == null) {
-            return service.listar(repository.findAll());
+            return helper.listarDespesas(repository.findAll());
         }
-        return service.listar(repository.findByDescricaoIgnoreCase(descricao));
+        return helper.listarDespesas(repository.findByDescricaoIgnoreCase(descricao));
     }
+    
 
     @GetMapping("/{ano}/{mes}")
-    public ResponseEntity<List<DespesaDto>> listarPorMes(@PathVariable int ano, @PathVariable int mesInt) {
-        return service.listarPorMes(mesInt, ano, repository);
+    public ResponseEntity<List<DespesaDto>> listarPorMes(@PathVariable int ano, @PathVariable("mes") int mesInt) {
+        var mes = Periodo.doMes(mesInt, ano);
+        return helper.listarDespesas(repository.findByDataBetween(mes.ini(), mes.fim()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DespesaDto> detalhar(@PathVariable String id) {
-        return service.detalhar(id, repository);
+        if(repository.existsById(id)) {
+            return ResponseEntity.ok(new DespesaDto(repository.findById(id).get()));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<DespesaDto> atualizar(@PathVariable String id,
             @Valid @RequestBody RegistroForm form) {
-        return service.atualizar(id, repository, form);
+        if(repository.existsById(id)) {
+            var registro = helper.atualizarValores(repository.findById(id).get(), form);
+            var despesa = (Despesa) repository.verificaSeAceita(registro);
+            return ResponseEntity.ok(new DespesaDto(repository.save(despesa)));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> remover(@PathVariable String id) {
-        return service.remover(id, repository);
+        return helper.delete(id, repository);
     }
 
 }

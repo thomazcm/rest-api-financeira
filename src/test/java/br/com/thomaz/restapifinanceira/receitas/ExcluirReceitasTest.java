@@ -13,9 +13,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoSession;
 
 import br.com.thomaz.restapifinanceira.controller.ReceitaController;
+import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
-import br.com.thomaz.restapifinanceira.service.ReceitaService;
 
 class ExcluirReceitasTest {
 
@@ -27,7 +27,7 @@ class ExcluirReceitasTest {
     @BeforeEach
     void setUp() {
         session = Mockito.mockitoSession().initMocks(this).startMocking();
-        controller = new ReceitaController(repository, new ReceitaService());
+        controller = new ReceitaController(repository, new RegistroControllerHelper());
     }
 
     @AfterEach

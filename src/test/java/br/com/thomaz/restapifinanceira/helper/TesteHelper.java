@@ -9,30 +9,43 @@ import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
+import br.com.thomaz.restapifinanceira.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
-import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.model.Registro;
 
 public class TesteHelper {
-    
+//    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+//    
+//    public boolean validaForm(RegistroForm form) {
+//        var violations = validator.validate(form);
+//        System.out.println(violations.size());
+//        return violations.isEmpty();
+//    }
+//    
     public void atributosIguais(Receita receita, ReceitaDto receitaDto) {
             assertEquals(receita.getDescricao(), receitaDto.getDescricao());
             assertEquals(receita.getValor(), new BigDecimal(receitaDto.getValor()));
             assertEquals(receita.getData(), LocalDate.of(receitaDto.getAno(), receitaDto.getMes(), receitaDto.getDia()));
     }
     
-    public void atributosIguais(Despesa despesa, DespesaDto despesaDto) {
-        assertEquals(despesa.getDescricao(), despesaDto.getDescricao());
-        assertEquals(despesa.getValor(), new BigDecimal(despesaDto.getValor()));
-        assertEquals(despesa.getData(), LocalDate.of(despesaDto.getAno(), despesaDto.getMes(), despesaDto.getDia()));
-        assertEquals(despesa.getCategoria(), CategoriaDespesa.definir(despesaDto.getCategoria(), null));
+    public void atributosIguais(Registro registro, DespesaDto registroDto) {
+        assertEquals(registro.getDescricao(), registroDto.getDescricao());
+        assertEquals(registro.getValor(), new BigDecimal(registroDto.getValor()));
+        assertEquals(registro.getData(), LocalDate.of(registroDto.getAno(), registroDto.getMes(), registroDto.getDia()));
+        assertEquals(registro.getCategoria(), CategoriaDespesa.definir(registroDto.getCategoria(), null));
     }
 
     public void atributosIguais(Registro registro1, Registro registro2) {
         assertEquals(registro1.getDescricao(), registro2.getDescricao());
         assertEquals(registro1.getValor(), registro2.getValor());
         assertEquals(registro1.getData(), registro2.getData());
+    }
+
+    public void atributosIguais(RegistroForm form, Registro registro) {
+        assertEquals(form.getDescricao(), registro.getDescricao());
+        assertEquals(new BigDecimal(form.getValor()), registro.getValor());
+        assertEquals(form.gerarData(), registro.getData());
     }
 
     public void codigo200(ResponseEntity<?> resposta) {

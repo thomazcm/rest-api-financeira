@@ -1,7 +1,6 @@
-package br.com.thomaz.restapifinanceira.service;
+package br.com.thomaz.restapifinanceira.controller.helper;
 
 import java.math.BigDecimal;
-import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -12,29 +11,16 @@ import org.springframework.stereotype.Service;
 import br.com.thomaz.restapifinanceira.dto.ResumoMesDto;
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 import br.com.thomaz.restapifinanceira.model.Despesa;
-import br.com.thomaz.restapifinanceira.model.Periodo;
+import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.model.Registro;
-import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
-import br.com.thomaz.restapifinanceira.repository.ReceitaRepository;
 
 @Service
-public class ResumoService {
+public class ResumoControllerHelper {
 
-    public ResponseEntity<ResumoMesDto> gerarResumo(int ano, int mesInt, ReceitaRepository receitaRepository,
-            DespesaRepository despesaRepository) {
-        
-        Periodo mes;
-        try {
-            mes = Periodo.doMes(mesInt, ano);
-        } catch (DateTimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
-        
-        var receitasDoMes = receitaRepository.findByDataBetween(mes.ini(), mes.fim());
-        var despesasDoMes = despesaRepository.findByDataBetween(mes.ini(), mes.fim());
+    public ResponseEntity<ResumoMesDto> gerarResumo(List<Receita> receitasDoMes, List<Despesa> despesasDoMes) {
         var totalReceitas = calcularTotal(new ArrayList<Registro>(receitasDoMes));
         var totalDespesas = calcularTotal(new ArrayList<Registro>(despesasDoMes));
-        EnumMap<CategoriaDespesa, BigDecimal> gastosPorCategoria = calcularGastosPorCategoria(despesasDoMes);
+        var gastosPorCategoria = calcularGastosPorCategoria(despesasDoMes);
         
         return ResponseEntity.ok(new ResumoMesDto(totalReceitas, totalDespesas, gastosPorCategoria));
     }
