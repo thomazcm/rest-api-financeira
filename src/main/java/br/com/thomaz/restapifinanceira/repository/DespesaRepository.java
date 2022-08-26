@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.util.Streamable;
 import br.com.thomaz.restapifinanceira.model.Despesa;
 
 public interface DespesaRepository extends MongoRepository<Despesa, String>, RegistroRepository{

@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.config;
+package br.com.thomaz.restapifinanceira.config.handler;
 
 import java.util.ArrayList;
 import java.util.List;

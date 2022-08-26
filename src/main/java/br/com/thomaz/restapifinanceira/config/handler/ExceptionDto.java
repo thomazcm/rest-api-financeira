@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.config;
+package br.com.thomaz.restapifinanceira.config.handler;
 
 public class ExceptionDto {
     private final String erro;
