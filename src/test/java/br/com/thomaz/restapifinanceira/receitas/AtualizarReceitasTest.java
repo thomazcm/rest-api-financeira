@@ -53,7 +53,7 @@ class AtualizarReceitasTest {
         ResponseEntity<ReceitaDto> resposta = controller.atualizar(id, receitaForm);
         
         verify(repository, never()).findById(id);
-        verify(repository, never()).verificaSeAceita(Mockito.any());
+        verify(repository, never()).verificaMesmoMesComMesmaDescricao(Mockito.any());
         verify(repository, never()).save(Mockito.any());
         verifica.codigo404(resposta);
     }
@@ -66,14 +66,14 @@ class AtualizarReceitasTest {
         when(repository.existsById(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(receitaOptional);
         var receita = receitaOptional.get();
-        when(repository.verificaSeAceita(Mockito.any())).thenThrow(IllegalArgumentException.class);
+        when(repository.verificaMesmoMesComMesmaDescricao(Mockito.any())).thenThrow(IllegalArgumentException.class);
         
         try {
             controller.atualizar(id, receitaForm);
             fail();
         } catch (IllegalArgumentException e) {
             verify(repository, times(1)).findById(id);
-            verify(repository, times(1)).verificaSeAceita(receita);
+            verify(repository, times(1)).verificaMesmoMesComMesmaDescricao(receita);
             verify(repository, never()).save(Mockito.any());
         }
     }
@@ -87,13 +87,13 @@ class AtualizarReceitasTest {
         var receitaOptional = Optional.of(receita);
         when(repository.existsById(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(receitaOptional);
-        when(repository.verificaSeAceita(Mockito.any())).thenReturn(receita);
+        when(repository.verificaMesmoMesComMesmaDescricao(Mockito.any())).thenReturn(receita);
         when(repository.save(Mockito.any())).thenReturn(receita);
         
         ResponseEntity<ReceitaDto> resposta = controller.atualizar(id, receitaForm);
         
         verify(repository, times(1)).findById(id);
-        verify(repository, times(1)).verificaSeAceita(receita);
+        verify(repository, times(1)).verificaMesmoMesComMesmaDescricao(receita);
         verify(repository, times(1)).save(receita);
         verifica.codigo200(resposta);
         verifica.atributosIguais(receitaValoresAtualizados, resposta.getBody());

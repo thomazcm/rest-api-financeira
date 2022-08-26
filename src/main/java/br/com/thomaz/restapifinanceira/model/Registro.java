@@ -2,49 +2,64 @@ package br.com.thomaz.restapifinanceira.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
 
-public interface Registro {
-    
-    String getId();
-    String getDescricao();
-    BigDecimal getValor();
-    LocalDate getData();
-    
-    void setDescricao(String descricao);
-    void setData(LocalDate gerarData);
-    void setValor(BigDecimal bigDecimal);
-    
-    default int getDia() {
-        return getData().getDayOfMonth();
+public class Registro {
+
+    @Id
+    private String id;
+    private String descricao;
+    private BigDecimal valor;
+    private LocalDate data;
+
+    public Registro(String descricao, BigDecimal valor, LocalDate data) {
+        this.descricao = descricao;
+        this.valor = valor;
+        this.data = data;
     }
-    
-    default int getMes() {
-        return getData().getMonthValue();
+
+    public void setId(String id) {
+        this.id = id;
     }
-    
-    default int getAno() {
-        return getData().getYear();
+
+    public String getDescricao() {
+        return descricao;
     }
-    
-    default CategoriaDespesa getCategoria() {
-        try {
-            var despesa = (Despesa) this;
-            return despesa.getCategoria();
-        } catch (ClassCastException e) {
-            return null;
-        }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
-    
-    default void setCategoria(CategoriaDespesa categoria) {
-        try {
-            var despesa = (Despesa) this;
-            despesa.setCategoria(categoria);
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        }
+
+    public BigDecimal getValor() {
+        return valor;
     }
-    
-    default boolean ehDespesa() {
-        return this.getCategoria() != null;
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getAno() {
+        return data.getYear();
+    }
+
+    public int getMes() {
+        return data.getMonthValue();
+    }
+
+    public Integer getDia() {
+        return data.getDayOfMonth();
+    }
+
 }

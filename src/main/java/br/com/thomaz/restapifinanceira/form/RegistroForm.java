@@ -24,6 +24,10 @@ public class RegistroForm {
     
     private String categoria;
 
+    public CategoriaDespesa gerarCategoria() {
+        return CategoriaDespesa.fromString(categoria, CategoriaDespesa.OUTRAS);
+    }
+
     public Receita toReceita() {
         return new Receita(descricao, new BigDecimal(valor), gerarData());
     }
@@ -82,10 +86,6 @@ public class RegistroForm {
 
     public LocalDate gerarData() {
         return LocalDate.of(getAno(), getMes(), getDia());
-    }
-    
-    public CategoriaDespesa gerarCategoria() {
-        return CategoriaDespesa.definir(categoria, CategoriaDespesa.OUTRAS);
     }
 
 }

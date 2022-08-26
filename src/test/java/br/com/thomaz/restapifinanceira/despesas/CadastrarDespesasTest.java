@@ -52,7 +52,7 @@ class CadastrarDespesasTest {
         var form = Criar.despesaForm();
         var toDespesa = form.toDespesa();
         
-        when(repository.verificaSeAceita(Mockito.any())).thenReturn(toDespesa);
+        when(repository.verificaMesmoMesComMesmaDescricao(Mockito.any())).thenReturn(toDespesa);
         when(repository.save(any(Despesa.class))).thenReturn(toDespesa);
         
         ResponseEntity<DespesaDto> resposta = controller.cadastrar(form);
@@ -60,7 +60,7 @@ class CadastrarDespesasTest {
         verify(repository, times(1)).save(captor.capture());
         Despesa despesaASalvar = captor.getValue();
         
-        verify(repository, times(1)).verificaSeAceita(any(Despesa.class));
+        verify(repository, times(1)).verificaMesmoMesComMesmaDescricao(any(Despesa.class));
         
         verifica.atributosIguais(form, despesaASalvar);
         verifica.atributosIguais(toDespesa, resposta.getBody());
@@ -70,7 +70,7 @@ class CadastrarDespesasTest {
     @Test
     void naoDeveCadastrarDespesaSeJaExiste() {
         var form = Criar.despesaForm();
-        when(repository.verificaSeAceita(Mockito.any())).thenThrow(IllegalArgumentException.class);
+        when(repository.verificaMesmoMesComMesmaDescricao(Mockito.any())).thenThrow(IllegalArgumentException.class);
         
         try {
             controller.cadastrar(form);

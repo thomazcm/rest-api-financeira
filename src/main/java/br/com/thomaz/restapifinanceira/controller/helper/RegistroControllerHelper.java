@@ -20,22 +20,18 @@ import br.com.thomaz.restapifinanceira.repository.RegistroRepository;
 @Service
 public class RegistroControllerHelper {
 
-    private URI uri(Registro registro, String path) {
-        return UriComponentsBuilder.fromPath(path).buildAndExpand(registro.getId()).toUri();
-    }
-    
-    public ResponseEntity<ReceitaDto> created (Receita receita){
+    public ResponseEntity<ReceitaDto> created(Receita receita) {
         return ResponseEntity.created(uri(receita, "/receitas/{id}")).body(new ReceitaDto(receita));
     }
-    
-    public ResponseEntity<DespesaDto> created (Despesa despesa){
+
+    public ResponseEntity<DespesaDto> created(Despesa despesa) {
         return ResponseEntity.created(uri(despesa, "/despesas/{id}")).body(new DespesaDto(despesa));
     }
-    
+
     public ResponseEntity<List<DespesaDto>> listarDespesas(List<Despesa> despesas) {
         return ResponseEntity.ok(despesas.stream().map(DespesaDto::new).toList());
     }
-    
+
     public ResponseEntity<List<ReceitaDto>> listarReceitas(List<Receita> receitas) {
         return ResponseEntity.ok(receitas.stream().map(ReceitaDto::new).toList());
     }
@@ -44,8 +40,10 @@ public class RegistroControllerHelper {
         registro.setDescricao(form.getDescricao());
         registro.setValor(new BigDecimal(form.getValor()));
         registro.setData(form.gerarData());
-        if (registro.ehDespesa()) {
-            registro.setCategoria(CategoriaDespesa.definir(form.getCategoria(), registro.getCategoria()));
+        if (registro.getClass().equals(Despesa.class)) {
+            var despesa = (Despesa) registro;
+            despesa.setCategoria(
+                    CategoriaDespesa.fromString(form.getCategoria(), despesa.getCategoria()));
         }
         return registro;
     }
@@ -57,5 +55,9 @@ public class RegistroControllerHelper {
         }
         return ResponseEntity.notFound().build();
     }
-    
+
+    private URI uri(Registro registro, String path) {
+        return UriComponentsBuilder.fromPath(path).buildAndExpand(registro.getId()).toUri();
+    }
+
 }

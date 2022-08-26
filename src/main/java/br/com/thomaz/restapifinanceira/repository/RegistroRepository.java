@@ -13,7 +13,7 @@ public interface RegistroRepository {
                         (LocalDate inicio, LocalDate fim, String descricao, String id);
 
     
-    default Registro verificaSeAceita(Registro registro) {
+    default Registro verificaMesmoMesComMesmaDescricao(Registro registro) {
         var mes = Periodo.doRegistro(registro);
         var descricao = registro.getDescricao();
         var id = registro.getId();

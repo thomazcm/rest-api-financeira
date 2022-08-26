@@ -53,7 +53,7 @@ class AtualizarDespesasTest {
         ResponseEntity<DespesaDto> resposta = controller.atualizar(id, despesaForm);
         
         verify(repository, never()).findById(id);
-        verify(repository, never()).verificaSeAceita(Mockito.any());
+        verify(repository, never()).verificaMesmoMesComMesmaDescricao(Mockito.any());
         verify(repository, never()).save(Mockito.any());
         verifica.codigo404(resposta);
     }
@@ -66,14 +66,14 @@ class AtualizarDespesasTest {
         when(repository.existsById(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(despesaOptional);
         var despesa = despesaOptional.get();
-        when(repository.verificaSeAceita(Mockito.any())).thenThrow(IllegalArgumentException.class);
+        when(repository.verificaMesmoMesComMesmaDescricao(Mockito.any())).thenThrow(IllegalArgumentException.class);
         
         try {
             controller.atualizar(id, despesaForm);
             fail();
         } catch (IllegalArgumentException e) {
             verify(repository, times(1)).findById(id);
-            verify(repository, times(1)).verificaSeAceita(despesa);
+            verify(repository, times(1)).verificaMesmoMesComMesmaDescricao(despesa);
             verify(repository, never()).save(Mockito.any());
         }
     }
@@ -87,13 +87,13 @@ class AtualizarDespesasTest {
         var despesaOptional = Optional.of(despesa);
         when(repository.existsById(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(despesaOptional);
-        when(repository.verificaSeAceita(Mockito.any())).thenReturn(despesa);
+        when(repository.verificaMesmoMesComMesmaDescricao(Mockito.any())).thenReturn(despesa);
         when(repository.save(Mockito.any())).thenReturn(despesa);
         
         ResponseEntity<DespesaDto> resposta = controller.atualizar(id, despesaForm);
         
         verify(repository, times(1)).findById(id);
-        verify(repository, times(1)).verificaSeAceita(despesa);
+        verify(repository, times(1)).verificaMesmoMesComMesmaDescricao(despesa);
         verify(repository, times(1)).save(despesa);
         verifica.codigo200(resposta);
         verifica.atributosIguais(despesaValoresAtualizados, resposta.getBody());

@@ -52,7 +52,7 @@ class CadastrarReceitasTest {
         var form = Criar.receitaForm();
         var toReceita = form.toReceita();
         
-        when(repository.verificaSeAceita(Mockito.any())).thenReturn(toReceita);
+        when(repository.verificaMesmoMesComMesmaDescricao(Mockito.any())).thenReturn(toReceita);
         when(repository.save(any(Receita.class))).thenReturn(toReceita);
         
         ResponseEntity<ReceitaDto> resposta = controller.cadastrar(form);
@@ -60,7 +60,7 @@ class CadastrarReceitasTest {
         verify(repository, times(1)).save(captor.capture());
         Receita receitaASalvar = captor.getValue();
         
-        verify(repository, times(1)).verificaSeAceita(any(Receita.class));
+        verify(repository, times(1)).verificaMesmoMesComMesmaDescricao(any(Receita.class));
         
         verifica.atributosIguais(form, receitaASalvar);
         verifica.atributosIguais(toReceita, resposta.getBody());
@@ -70,7 +70,7 @@ class CadastrarReceitasTest {
     @Test
     void naoDeveCadastrarReceitaSeJaExiste() {
         var form = Criar.receitaForm();
-        when(repository.verificaSeAceita(Mockito.any())).thenThrow(IllegalArgumentException.class);
+        when(repository.verificaMesmoMesComMesmaDescricao(Mockito.any())).thenThrow(IllegalArgumentException.class);
         
         try {
             controller.cadastrar(form);

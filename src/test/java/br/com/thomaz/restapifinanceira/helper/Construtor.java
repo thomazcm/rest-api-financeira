@@ -26,7 +26,7 @@ public class Construtor {
     
     public Construtor despesa(String descricao, double valor, int dia, int mes, int ano, String categoria) {
         var despesa = new Despesa(descricao, new BigDecimal(valor), 
-                LocalDate.of(ano, mes, dia), CategoriaDespesa.definir(categoria, CategoriaDespesa.OUTRAS));
+                LocalDate.of(ano, mes, dia), CategoriaDespesa.fromString(categoria, CategoriaDespesa.OUTRAS));
         despesa.setId(String.valueOf(id));
         id++;
         despesas.add(despesa);
@@ -49,8 +49,9 @@ public class Construtor {
         var form = new RegistroForm();
         Registro registro;
         if (receitas.isEmpty()) {
-           registro = despesas.get(0);
-           form.setCategoria(CategoriaDespesa.nome(registro.getCategoria()));
+           registro =  despesas.get(0);
+           Despesa despesa = (Despesa) registro;
+           form.setCategoria(CategoriaDespesa.toString(despesa.getCategoria()));
         } else {
             registro = receitas.get(0);
         }

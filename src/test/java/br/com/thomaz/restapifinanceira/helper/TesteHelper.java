@@ -11,6 +11,7 @@ import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
 import br.com.thomaz.restapifinanceira.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
+import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.model.Registro;
 
@@ -26,14 +27,14 @@ public class TesteHelper {
     public void atributosIguais(Receita receita, ReceitaDto receitaDto) {
             assertEquals(receita.getDescricao(), receitaDto.getDescricao());
             assertEquals(receita.getValor(), new BigDecimal(receitaDto.getValor()));
-            assertEquals(receita.getData(), LocalDate.of(receitaDto.getAno(), receitaDto.getMes(), receitaDto.getDia()));
+            assertEquals(receita.getData(), receitaDto.getData());
     }
     
-    public void atributosIguais(Registro registro, DespesaDto registroDto) {
-        assertEquals(registro.getDescricao(), registroDto.getDescricao());
-        assertEquals(registro.getValor(), new BigDecimal(registroDto.getValor()));
-        assertEquals(registro.getData(), LocalDate.of(registroDto.getAno(), registroDto.getMes(), registroDto.getDia()));
-        assertEquals(registro.getCategoria(), CategoriaDespesa.definir(registroDto.getCategoria(), null));
+    public void atributosIguais(Despesa despesa, DespesaDto despesaDto) {
+        assertEquals(despesa.getDescricao(), despesaDto.getDescricao());
+        assertEquals(despesa.getValor(), new BigDecimal(despesaDto.getValor()));
+        assertEquals(despesa.getData(), despesaDto.getData());
+        assertEquals(despesa.getCategoria(), CategoriaDespesa.fromString(despesaDto.getCategoria(), null));
     }
 
     public void atributosIguais(Registro registro1, Registro registro2) {
