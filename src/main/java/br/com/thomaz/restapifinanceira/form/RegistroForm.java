@@ -28,12 +28,12 @@ public class RegistroForm {
         return CategoriaDespesa.fromString(categoria, CategoriaDespesa.OUTRAS);
     }
 
-    public Receita toReceita() {
-        return new Receita(descricao, new BigDecimal(valor), gerarData());
+    public Receita toReceita(String userId) {
+        return new Receita(userId, descricao, new BigDecimal(valor), gerarData());
     }
 
-    public Despesa toDespesa() {
-        return new Despesa(descricao, new BigDecimal(valor), gerarData(), gerarCategoria());
+    public Despesa toDespesa(String userId) {
+        return new Despesa(userId, descricao, new BigDecimal(valor), gerarData(), gerarCategoria());
     }
 
     public String getDescricao() {

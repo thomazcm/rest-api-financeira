@@ -4,6 +4,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import br.com.thomaz.restapifinanceira.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -36,7 +37,8 @@ public class TokenService {
                 .compact();
     }
 
-    public boolean ehValido(String token) {
+    public boolean ehValido(String tokenRaw) {
+        String token = format(tokenRaw);
         try {
             Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
             return true;
@@ -46,9 +48,17 @@ public class TokenService {
         }
     }
 
-    public String getUserIdFrom(String token) {
+    public String getUserIdFrom(String tokenRaw) {
+        String token = format(tokenRaw);
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
         return claims.getSubject();
+    }
+
+    private String format(String tokenRaw) {
+        if (ObjectUtils.isEmpty(tokenRaw) || !tokenRaw.startsWith("Bearer ")) {
+            return null;
+        }
+        return tokenRaw.substring(7, tokenRaw.length());
     }
 
 }

@@ -6,6 +6,6 @@ import br.com.thomaz.restapifinanceira.model.Usuario;
 
 public interface UsuarioRepository extends MongoRepository<Usuario, String>{
 
-    Optional<Usuario> findByEmail(String emial);
+    Optional<Usuario> findByEmail(String email);
     
 }

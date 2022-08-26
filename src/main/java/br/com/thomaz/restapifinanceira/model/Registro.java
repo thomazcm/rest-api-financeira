@@ -8,11 +8,13 @@ public class Registro {
 
     @Id
     private String id;
+    private final String userId;
     private String descricao;
     private BigDecimal valor;
     private LocalDate data;
 
-    public Registro(String descricao, BigDecimal valor, LocalDate data) {
+    public Registro(String userId, String descricao, BigDecimal valor, LocalDate data) {
+        this.userId = userId;
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
@@ -20,6 +22,10 @@ public class Registro {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getDescricao() {

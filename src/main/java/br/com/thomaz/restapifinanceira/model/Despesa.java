@@ -9,8 +9,8 @@ public class Despesa extends Registro{
     
     private CategoriaDespesa categoria;
     
-    public Despesa(String descricao, BigDecimal valor, LocalDate data, CategoriaDespesa categoria) {
-        super(descricao, valor, data);
+    public Despesa(String userId, String descricao, BigDecimal valor, LocalDate data, CategoriaDespesa categoria) {
+        super(userId, descricao, valor, data);
         this.categoria = categoria;
     }
 

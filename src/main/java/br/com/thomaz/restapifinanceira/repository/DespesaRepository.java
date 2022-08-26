@@ -9,14 +9,19 @@ import br.com.thomaz.restapifinanceira.model.Despesa;
 
 public interface DespesaRepository extends MongoRepository<Despesa, String>, RegistroRepository{
     
-    Page<Despesa> findByDescricaoIgnoreCase(String descricao, Pageable page);
-    
-    List<Despesa> findByDataBetween(LocalDate inicio, LocalDate fim);
-    
-    Page<Despesa> findByDataBetween(LocalDate ini, LocalDate fim, Pageable page);
+    List<Despesa> findByUserIdAndDataBetween(String userId,LocalDate ini, LocalDate fim);
 
+    Page<Despesa> findByUserIdAndDataBetween(String userId, LocalDate inicio, LocalDate fim, Pageable page);
+    
+    Page<Despesa> findByUserIdAndDescricaoIgnoreCase(String userId, String descricao, Pageable pageable);
+    
     @Override
-    boolean existsByDataBetweenAndDescricaoIgnoreCaseAndIdNot(LocalDate inicio, LocalDate fim,
+    boolean existsByUserIdAndDataBetweenAndDescricaoIgnoreCaseAndIdNot(String userId, LocalDate inicio, LocalDate fim,
                                                                     String descricao, String id);
 
+    Page<Despesa> findByUserId(String userId, Pageable page);
+
+    boolean existsByUserIdAndId(String userId, String id);
+
 }
+

@@ -48,8 +48,8 @@ public class RegistroControllerHelper {
         return registro;
     }
 
-    public ResponseEntity<?> delete(String id, RegistroRepository repository) {
-        if (repository.existsById(id)) {
+    public ResponseEntity<?> delete(String userId, String id, RegistroRepository repository) {
+        if (repository.existsByUserIdAndId(userId, id)) {
             repository.deleteById(id);
             return ResponseEntity.ok().build();
         }

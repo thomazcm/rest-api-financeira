@@ -47,8 +47,8 @@ class ResumoMesTest {
 
     @Test
     void deveGerarResumo() {
-        when(receitaRepo.findByDataBetween(any(), any())).thenReturn(Criar.receitas());
-        when(despesaRepo.findByDataBetween(any(), any())).thenReturn(Criar.despesas());
+        when(receitaRepo.findByUserIdAndDataBetween(any(), any())).thenReturn(Criar.receitas());
+        when(despesaRepo.findByUserIdAndDataBetween(any(), any())).thenReturn(Criar.despesas());
         var resposta = controller.resumoMes(2022, 1);
         verifica.codigo200(resposta);
         ResumoMesDto resumoDto = resposta.getBody();
@@ -63,8 +63,8 @@ class ResumoMesTest {
     
     @Test
     void deveGerarResumoSemDespesas() {
-            when(receitaRepo.findByDataBetween(any(), any())).thenReturn(Criar.receitas());
-            when(despesaRepo.findByDataBetween(any(), any())).thenReturn(new ArrayList<Despesa>());
+            when(receitaRepo.findByUserIdAndDataBetween(any(), any())).thenReturn(Criar.receitas());
+            when(despesaRepo.findByUserIdAndDataBetween(any(), any())).thenReturn(new ArrayList<Despesa>());
             var resposta = controller.resumoMes(2022, 1);
             verifica.codigo200(resposta);
             ResumoMesDto resumoDto = resposta.getBody();
@@ -76,8 +76,8 @@ class ResumoMesTest {
     
     @Test
     void deveGerarResumoSemReceitas() {
-        when(receitaRepo.findByDataBetween(any(), any())).thenReturn(new ArrayList<Receita>());
-        when(despesaRepo.findByDataBetween(any(), any())).thenReturn(Criar.despesas());
+        when(receitaRepo.findByUserIdAndDataBetween(any(), any())).thenReturn(new ArrayList<Receita>());
+        when(despesaRepo.findByUserIdAndDataBetween(any(), any())).thenReturn(Criar.despesas());
         var resposta = controller.resumoMes(2022, 1);
         verifica.codigo200(resposta);
         ResumoMesDto resumoDto = resposta.getBody();
@@ -92,8 +92,8 @@ class ResumoMesTest {
     
     @Test 
     void deveGerarResumoEmMesSemAtividade(){
-        when(receitaRepo.findByDataBetween(any(), any())).thenReturn(new ArrayList<Receita>());
-        when(despesaRepo.findByDataBetween(any(), any())).thenReturn(new ArrayList<Despesa>());
+        when(receitaRepo.findByUserIdAndDataBetween(any(), any())).thenReturn(new ArrayList<Receita>());
+        when(despesaRepo.findByUserIdAndDataBetween(any(), any())).thenReturn(new ArrayList<Despesa>());
         var resposta = controller.resumoMes(2022, 1);
         verifica.codigo200(resposta);
         ResumoMesDto resumoDto = resposta.getBody();
