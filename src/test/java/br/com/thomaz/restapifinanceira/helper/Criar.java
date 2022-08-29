@@ -29,7 +29,7 @@ public abstract class Criar {
         return new Construtor().despesa("Aluguel", 1000, 10, 1, 2022, "moradia")
                                 .despesa("Aluguel", 1000, 10, 2, 2022, "moradia")
                                 .despesa("Aluguel", 1000, 10, 3, 2022, "moradia")
-                                .despesa("iFood", 200, 10, 1, 2022, "alimentação")
+                                .despesa("Show", 200, 10, 1, 2022, "lazer")
                                 .despesa("Cinema", 40, 10, 1, 2022, "lazer")
                                 .criaListaDespesas();
     }

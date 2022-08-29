@@ -175,7 +175,6 @@ class ReceitasTest {
     void setUp() throws Exception {
         mockito = Mockito.mockitoSession()
            .initMocks(this).strictness(Strictness.STRICT_STUBS).startMocking();
-        controller = new ReceitaController(repository, tokenService);
         when(tokenService.usuarioFromToken(TOKEN, repository)).thenReturn(usuario);
         controller = new ReceitaController(repository, tokenService);
         helper = new TesteHelper();

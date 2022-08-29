@@ -175,7 +175,6 @@ class DespesasTest {
     void setUp() throws Exception {
         mockito = Mockito.mockitoSession()
            .initMocks(this).strictness(Strictness.STRICT_STUBS).startMocking();
-        controller = new DespesaController(repository, tokenService);
         when(tokenService.usuarioFromToken(TOKEN, repository)).thenReturn(usuario);
         controller = new DespesaController(repository, tokenService);
         helper = new TesteHelper();

@@ -1,7 +1,6 @@
 package br.com.thomaz.restapifinanceira.dto;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import br.com.thomaz.restapifinanceira.model.Receita;
