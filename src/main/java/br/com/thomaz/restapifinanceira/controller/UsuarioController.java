@@ -20,8 +20,7 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository repository;
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     
     @PostMapping
     public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioForm form){
