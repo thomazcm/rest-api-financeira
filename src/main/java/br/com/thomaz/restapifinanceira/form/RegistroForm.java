@@ -15,25 +15,37 @@ import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;
 
 public class RegistroForm {
-    
-    @NotBlank private String descricao;
-    @NotNull @PositiveOrZero private Double valor;
-    @NotNull @Positive @Max(31) private Integer dia;
-    @NotNull @Positive @Max(12) private Integer mes;
-    @NotNull @Min(1900) @Max(2100) private Integer ano;
-    
+
+    @NotBlank
+    private String descricao;
+    @NotNull
+    @PositiveOrZero
+    private Double valor;
+    @NotNull
+    @Positive
+    @Max(31)
+    private Integer dia;
+    @NotNull
+    @Positive
+    @Max(12)
+    private Integer mes;
+    @NotNull
+    @Min(1900)
+    @Max(2100)
+    private Integer ano;
+
     private String categoria;
 
-    public CategoriaDespesa gerarCategoria() {
-        return CategoriaDespesa.fromString(categoria, CategoriaDespesa.OUTRAS);
+    public Receita toReceita() {
+        return new Receita(descricao, new BigDecimal(valor), gerarData());
     }
 
-    public Receita toReceita(String userId) {
-        return new Receita(userId, descricao, new BigDecimal(valor), gerarData());
+    public Despesa toDespesa() {
+        return new Despesa(descricao, new BigDecimal(valor), gerarData(), gerarCategoria());
     }
 
-    public Despesa toDespesa(String userId) {
-        return new Despesa(userId, descricao, new BigDecimal(valor), gerarData(), gerarCategoria());
+    public LocalDate gerarData() {
+        return LocalDate.of(getAno(), getMes(), getDia());
     }
 
     public String getDescricao() {
@@ -75,7 +87,7 @@ public class RegistroForm {
     public void setAno(Integer ano) {
         this.ano = ano;
     }
-    
+
     public String getCategoria() {
         return categoria;
     }
@@ -84,8 +96,8 @@ public class RegistroForm {
         this.categoria = categoria;
     }
 
-    public LocalDate gerarData() {
-        return LocalDate.of(getAno(), getMes(), getDia());
+    private CategoriaDespesa gerarCategoria() {
+        return CategoriaDespesa.fromString(categoria, CategoriaDespesa.OUTRAS);
     }
 
 }

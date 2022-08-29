@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoSession;
 
 import br.com.thomaz.restapifinanceira.controller.ResumoController;
-import br.com.thomaz.restapifinanceira.controller.helper.ResumoControllerHelper;
+import br.com.thomaz.restapifinanceira.controller.service.ResumoService;
 import br.com.thomaz.restapifinanceira.dto.ResumoMesDto;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
@@ -37,7 +37,7 @@ class ResumoMesTest {
     @BeforeEach
     void setUp() {
         session = Mockito.mockitoSession().initMocks(this).startMocking();
-        controller = new ResumoController(new ResumoControllerHelper(), receitaRepo, despesaRepo);
+        controller = new ResumoController(new ResumoService(), receitaRepo, despesaRepo);
     }
     
     @AfterEach

@@ -39,6 +39,7 @@ public class SecurityConfigurations {
 //        .antMatchers(HttpMethod.GET, "/resumo/*/*").permitAll()
         .antMatchers(HttpMethod.POST, "/auth").permitAll()
         .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
+        .antMatchers(HttpMethod.DELETE, "/admin").permitAll()
         .anyRequest().authenticated()
         .and().csrf().disable().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

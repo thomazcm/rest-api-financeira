@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoSession;
 
 import br.com.thomaz.restapifinanceira.controller.DespesaController;
-import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
+import br.com.thomaz.restapifinanceira.controller.service.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;
 import br.com.thomaz.restapifinanceira.repository.DespesaRepository;
 

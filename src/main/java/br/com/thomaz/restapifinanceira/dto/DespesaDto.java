@@ -1,20 +1,20 @@
 package br.com.thomaz.restapifinanceira.dto;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 import br.com.thomaz.restapifinanceira.model.Despesa;
-import br.com.thomaz.restapifinanceira.model.Registro;
 
 public class DespesaDto {
 
-    private String id;
+    private Long id;
     private String descricao;
     private Double valor;
     private LocalDate data;
     private String categoria;
 
-    public DespesaDto(Registro registro) {
-        Despesa despesa = (Despesa) registro;
+    public DespesaDto(Despesa despesa) {
         this.id = despesa.getId();
         this.descricao = despesa.getDescricao();
         this.valor = despesa.getValor().doubleValue();
@@ -22,7 +22,7 @@ public class DespesaDto {
         this.categoria = CategoriaDespesa.toString(despesa.getCategoria());
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -40,5 +40,13 @@ public class DespesaDto {
 
     public LocalDate getData() {
         return data;
+    }
+
+    public static List<DespesaDto> listar(List<Despesa> despesas) {
+        var lista = despesas.stream().map(DespesaDto::new).collect(Collectors.toList());
+        lista.sort((r1, r2) -> {
+            return r1.getData().compareTo(r2.getData());
+        });
+        return lista;
     }
 }

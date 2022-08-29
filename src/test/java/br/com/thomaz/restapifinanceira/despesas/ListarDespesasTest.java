@@ -24,7 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import br.com.thomaz.restapifinanceira.controller.DespesaController;
-import br.com.thomaz.restapifinanceira.controller.helper.RegistroControllerHelper;
+import br.com.thomaz.restapifinanceira.controller.service.RegistroControllerHelper;
 import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.helper.Criar;
 import br.com.thomaz.restapifinanceira.helper.TesteHelper;

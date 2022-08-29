@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 
@@ -36,7 +35,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter{
     }
 
     private void autenticaRequest(String token) {
-        var usuario = repository.findById(service.getUserIdFrom(token)).get();
+        var usuario = repository.findById(service.idFromToken(token)).get();
         var userPassAuthToken =
                 new UsernamePasswordAuthenticationToken(usuario, null, usuario.getPerfis());
         SecurityContextHolder.getContext().setAuthentication(userPassAuthToken);

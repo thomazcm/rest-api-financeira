@@ -2,32 +2,28 @@ package br.com.thomaz.restapifinanceira.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import org.springframework.data.annotation.Id;
 
 public class Registro {
 
-    @Id
-    private String id;
-    private final String userId;
+    private Long id;
     private String descricao;
     private BigDecimal valor;
     private LocalDate data;
 
-    public Registro(String userId, String descricao, BigDecimal valor, LocalDate data) {
-        this.userId = userId;
+    public Registro(String descricao, BigDecimal valor, LocalDate data) {
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
     }
 
-    public void setId(String id) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
-
-    public String getUserId() {
-        return userId;
-    }
-
+    
     public String getDescricao() {
         return descricao;
     }
@@ -50,10 +46,6 @@ public class Registro {
 
     public void setData(LocalDate data) {
         this.data = data;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public int getAno() {

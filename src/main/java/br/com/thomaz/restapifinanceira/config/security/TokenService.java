@@ -1,11 +1,14 @@
 package br.com.thomaz.restapifinanceira.config.security;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import br.com.thomaz.restapifinanceira.config.exception.UsuarioInexistenteException;
 import br.com.thomaz.restapifinanceira.model.Usuario;
+import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -47,8 +50,16 @@ public class TokenService {
             return false;
         }
     }
+    
+    public Usuario usuarioFromToken(String token, UsuarioRepository repo) {
+        try {
+            return repo.findById(idFromToken(token)).get();
+        } catch (NoSuchElementException e) {
+            throw new UsuarioInexistenteException();
+        }
+    }
 
-    public String getUserIdFrom(String tokenRaw) {
+    public String idFromToken(String tokenRaw) {
         String token = format(tokenRaw);
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
         return claims.getSubject();
@@ -58,7 +69,9 @@ public class TokenService {
         if (ObjectUtils.isEmpty(tokenRaw) || !tokenRaw.startsWith("Bearer ")) {
             return null;
         }
-        return tokenRaw.substring(7, tokenRaw.length());
+        String token = tokenRaw.substring(7, tokenRaw.length());
+        System.out.println();
+        return token;
     }
 
 }

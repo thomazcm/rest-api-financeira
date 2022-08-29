@@ -2,6 +2,7 @@ package br.com.thomaz.restapifinanceira.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +18,12 @@ public class Usuario implements UserDetails{
     private String email;
     private String senha;
     private Collection<Perfil> perfis = new ArrayList<>();
+    private Registros registros = new Registros();
 
+    public Registros getRegistros() {
+        return registros;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -56,7 +62,7 @@ public class Usuario implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.perfis;
+        return Collections.unmodifiableCollection(this.perfis);
     }
 
     @Override
