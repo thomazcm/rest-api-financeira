@@ -14,11 +14,11 @@ import br.com.thomaz.restapifinanceira.model.Registro;
 public class Construtor {
     private List<Receita> receitas = new ArrayList<>();
     private List<Despesa> despesas = new ArrayList<>();
-    static int id = 1;
+    static Long id = 1L;
     
     public Construtor receita(String descricao, double valor, int dia, int mes, int ano) {
         var receita = new Receita(descricao, new BigDecimal(valor), LocalDate.of(ano, mes, dia));
-        receita.setId(String.valueOf(id));
+        receita.setId(id);
         id++;
         receitas.add(receita);
         return this;
@@ -27,7 +27,7 @@ public class Construtor {
     public Construtor despesa(String descricao, double valor, int dia, int mes, int ano, String categoria) {
         var despesa = new Despesa(descricao, new BigDecimal(valor), 
                 LocalDate.of(ano, mes, dia), CategoriaDespesa.fromString(categoria, CategoriaDespesa.OUTRAS));
-        despesa.setId(String.valueOf(id));
+        despesa.setId(id);
         id++;
         despesas.add(despesa);
         return this;

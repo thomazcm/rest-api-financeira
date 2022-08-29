@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import br.com.thomaz.restapifinanceira.config.exception.RegistroNotFoundException;
+import br.com.thomaz.restapifinanceira.config.exception.RegistroNaoEncontradoException;
 import br.com.thomaz.restapifinanceira.config.exception.RegistroRepetidoException;
 import br.com.thomaz.restapifinanceira.config.exception.UsuarioInexistenteException;
 
@@ -30,8 +30,8 @@ public class CommonExceptionHandler {
     }
     
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    @ExceptionHandler(RegistroNotFoundException.class)
-    public ExceptionDto handleRegistroNotFoundException(RegistroNotFoundException e) {
+    @ExceptionHandler(RegistroNaoEncontradoException.class)
+    public ExceptionDto handleRegistroNotFoundException(RegistroNaoEncontradoException e) {
         String erro = "Recurso não encontrado";
         String causa = e.getMessage();
         return new ExceptionDto(erro, causa);

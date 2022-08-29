@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import br.com.thomaz.restapifinanceira.config.exception.RegistroNaoEncontradoException;
 import br.com.thomaz.restapifinanceira.config.security.TokenService;
 import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
 import br.com.thomaz.restapifinanceira.form.RegistroForm;
@@ -25,21 +26,20 @@ import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 public class ReceitaController {
     private TokenService tokenService;
 
-    private UsuarioRepository repo;
+    private UsuarioRepository repository;
 
     @Autowired
-    public ReceitaController(UsuarioRepository repo,
-            TokenService tokenService) {
-        this.repo = repo;
+    public ReceitaController(UsuarioRepository repository, TokenService tokenService) {
+        this.repository = repository;
         this.tokenService = tokenService;
     }
 
     @PostMapping
     public ResponseEntity<ReceitaDto> cadastrar(@Valid @RequestBody RegistroForm form,
             @RequestHeader(name = "Authorization") String token, UriComponentsBuilder builder) {
-        var usuario = tokenService.usuarioFromToken(token, repo);
+        var usuario = tokenService.usuarioFromToken(token, repository);
         var receita = usuario.getRegistros().salvar(form.toReceita());
-        repo.save(usuario);
+        repository.save(usuario);
         var uri = builder.path("receitas/{id}").buildAndExpand(receita.getId()).toUri();
         return ResponseEntity.created(uri).body(new ReceitaDto(receita));
     }
@@ -48,7 +48,7 @@ public class ReceitaController {
     public ResponseEntity<List<ReceitaDto>> listar(
             @RequestHeader(name = "Authorization") String token,
             @RequestParam(required = false) String descricao) {
-        var registros = tokenService.usuarioFromToken(token, repo).getRegistros();
+        var registros = tokenService.usuarioFromToken(token, repository).getRegistros();
 
         if (descricao == null) {
             var receitas = ReceitaDto.listar(registros.getReceitas());
@@ -62,7 +62,7 @@ public class ReceitaController {
     public ResponseEntity<List<ReceitaDto>> listarPorMes(
             @RequestHeader(name = "Authorization") String token,
             @PathVariable int ano, @PathVariable int mes) {
-        var registros = tokenService.usuarioFromToken(token, repo).getRegistros();
+        var registros = tokenService.usuarioFromToken(token, repository).getRegistros();
 
         var receitas = ReceitaDto.listar(registros.buscarReceita(ano, mes));
         return ResponseEntity.ok(receitas);
@@ -71,28 +71,36 @@ public class ReceitaController {
     @GetMapping("/{id}")
     public ResponseEntity<ReceitaDto> detalhar(
             @RequestHeader(name = "Authorization") String token, @PathVariable Long id) {
-        var registros = tokenService.usuarioFromToken(token, repo).getRegistros();
+        var registros = tokenService.usuarioFromToken(token, repository).getRegistros();
 
-        var receita = registros.buscarReceita(id);
-        return ResponseEntity.ok(new ReceitaDto(receita));
+        try {
+            var receita = registros.buscarReceita(id);
+            return ResponseEntity.ok(new ReceitaDto(receita));
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ReceitaDto> atualizar(@RequestHeader(name = "Authorization") String token,
             @Valid @RequestBody RegistroForm form, @PathVariable Long id) {
-        var usuario = tokenService.usuarioFromToken(token, repo);
-
-        var receita = usuario.getRegistros().atualizarReceita(id, form);
-        repo.save(usuario);
-        return ResponseEntity.ok(new ReceitaDto(receita));
+        var usuario = tokenService.usuarioFromToken(token, repository);
+        
+        try {
+            var receita = usuario.getRegistros().atualizarReceita(id, form);
+            repository.save(usuario);
+            return ResponseEntity.ok(new ReceitaDto(receita));
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@RequestHeader(name = "Authorization") String token,
             @PathVariable Long id) {
-        var usuario = tokenService.usuarioFromToken(token, repo);
+        var usuario = tokenService.usuarioFromToken(token, repository);
         if (usuario.getRegistros().deletarReceita(id)) {
-            repo.save(usuario);
+            repository.save(usuario);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();

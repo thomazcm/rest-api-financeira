@@ -16,11 +16,7 @@ public class UsuarioForm {
     private String senha;
 
     public Usuario toUsuario() {
-        Usuario usuario = new Usuario();
-        usuario.setNome(nome);
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
-        return usuario;
+        return new Usuario(nome, email, senha);
     }
 
     public String getNome() {

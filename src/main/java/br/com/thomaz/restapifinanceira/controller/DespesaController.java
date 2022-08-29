@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import br.com.thomaz.restapifinanceira.config.exception.RegistroNaoEncontradoException;
 import br.com.thomaz.restapifinanceira.config.security.TokenService;
 import br.com.thomaz.restapifinanceira.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.form.RegistroForm;
@@ -24,21 +25,21 @@ import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 @RequestMapping("/despesas")
 public class DespesaController {
     private TokenService tokenService;
-    private UsuarioRepository repo;
+
+    private UsuarioRepository repository;
 
     @Autowired
-    public DespesaController(UsuarioRepository repo,
-            TokenService tokenService) {
-        this.repo = repo;
+    public DespesaController(UsuarioRepository repository, TokenService tokenService) {
+        this.repository = repository;
         this.tokenService = tokenService;
     }
 
     @PostMapping
     public ResponseEntity<DespesaDto> cadastrar(@Valid @RequestBody RegistroForm form,
             @RequestHeader(name = "Authorization") String token, UriComponentsBuilder builder) {
-        var usuario = tokenService.usuarioFromToken(token, repo);
-        var despesa = usuario.getRegistros().salvarDespesa(form.toDespesa());
-        repo.save(usuario);
+        var usuario = tokenService.usuarioFromToken(token, repository);
+        var despesa = usuario.getRegistros().salvar(form.toDespesa());
+        repository.save(usuario);
         var uri = builder.path("despesas/{id}").buildAndExpand(despesa.getId()).toUri();
         return ResponseEntity.created(uri).body(new DespesaDto(despesa));
     }
@@ -47,7 +48,7 @@ public class DespesaController {
     public ResponseEntity<List<DespesaDto>> listar(
             @RequestHeader(name = "Authorization") String token,
             @RequestParam(required = false) String descricao) {
-        var registros = tokenService.usuarioFromToken(token, repo).getRegistros();
+        var registros = tokenService.usuarioFromToken(token, repository).getRegistros();
 
         if (descricao == null) {
             var despesas = DespesaDto.listar(registros.getDespesas());
@@ -61,7 +62,7 @@ public class DespesaController {
     public ResponseEntity<List<DespesaDto>> listarPorMes(
             @RequestHeader(name = "Authorization") String token,
             @PathVariable int ano, @PathVariable int mes) {
-        var registros = tokenService.usuarioFromToken(token, repo).getRegistros();
+        var registros = tokenService.usuarioFromToken(token, repository).getRegistros();
 
         var despesas = DespesaDto.listar(registros.buscarDespesa(ano, mes));
         return ResponseEntity.ok(despesas);
@@ -70,28 +71,36 @@ public class DespesaController {
     @GetMapping("/{id}")
     public ResponseEntity<DespesaDto> detalhar(
             @RequestHeader(name = "Authorization") String token, @PathVariable Long id) {
-        var registros = tokenService.usuarioFromToken(token, repo).getRegistros();
+        var registros = tokenService.usuarioFromToken(token, repository).getRegistros();
 
-        var despesa = registros.buscarDespesa(id);
-        return ResponseEntity.ok(new DespesaDto(despesa));
+        try {
+            var despesa = registros.buscarDespesa(id);
+            return ResponseEntity.ok(new DespesaDto(despesa));
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<DespesaDto> atualizar(@RequestHeader(name = "Authorization") String token,
             @Valid @RequestBody RegistroForm form, @PathVariable Long id) {
-        var usuario = tokenService.usuarioFromToken(token, repo);
-    
-        var despesa = usuario.getRegistros().atualizarDespesa(id, form);
-        repo.save(usuario);
-        return ResponseEntity.ok(new DespesaDto(despesa));
+        var usuario = tokenService.usuarioFromToken(token, repository);
+        
+        try {
+            var despesa = usuario.getRegistros().atualizarDespesa(id, form);
+            repository.save(usuario);
+            return ResponseEntity.ok(new DespesaDto(despesa));
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@RequestHeader(name = "Authorization") String token,
             @PathVariable Long id) {
-        var usuario = tokenService.usuarioFromToken(token, repo);
+        var usuario = tokenService.usuarioFromToken(token, repository);
         if (usuario.getRegistros().deletarDespesa(id)) {
-            repo.save(usuario);
+            repository.save(usuario);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();

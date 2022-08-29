@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.util.ObjectUtils;
-import br.com.thomaz.restapifinanceira.config.exception.RegistroNotFoundException;
+import br.com.thomaz.restapifinanceira.config.exception.RegistroNaoEncontradoException;
 import br.com.thomaz.restapifinanceira.config.exception.RegistroRepetidoException;
 import br.com.thomaz.restapifinanceira.form.RegistroForm;
 
@@ -35,7 +35,7 @@ public class Registros {
         return receita;
     }
 
-    public Despesa salvarDespesa(Despesa despesa) {
+    public Despesa salvar(Despesa despesa) {
         despesa.setId(despesasId);
         despesasId++;
         verificaRepeticao(despesa, despesas());
@@ -109,7 +109,7 @@ public class Registros {
     private Registro buscar(Long id, List<Registro> registros) {
         var optional = registros.stream().filter(r -> r.getId() == id).findFirst();
         if (optional.isEmpty()) {
-            throw new RegistroNotFoundException("Registro não encontrado com o id " + id);
+            throw new RegistroNaoEncontradoException("Registro não encontrado com o id " + id);
         }
         return optional.get();
     }
