@@ -1,5 +1,6 @@
 package br.com.thomaz.restapifinanceira.config.handler;
 
+
 public class ExceptionDto {
     private final String erro;
     private final String causa;

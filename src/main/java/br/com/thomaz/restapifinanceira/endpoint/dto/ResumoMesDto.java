@@ -1,8 +1,7 @@
-package br.com.thomaz.restapifinanceira.dto;
+package br.com.thomaz.restapifinanceira.endpoint.dto;
 
 import java.math.BigDecimal;
 import java.util.EnumMap;
-
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 
 public class ResumoMesDto {

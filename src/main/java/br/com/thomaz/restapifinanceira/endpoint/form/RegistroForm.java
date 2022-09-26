@@ -1,15 +1,13 @@
-package br.com.thomaz.restapifinanceira.form;
+package br.com.thomaz.restapifinanceira.endpoint.form;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;

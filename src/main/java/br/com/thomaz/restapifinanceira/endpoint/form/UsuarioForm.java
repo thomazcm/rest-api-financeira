@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.form;
+package br.com.thomaz.restapifinanceira.endpoint.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,7 +12,7 @@ public class UsuarioForm {
     private String nome;
     @NotNull @Email
     private String email;
-    @NotBlank @Length(min = 6, max = 20)
+    @NotBlank @Length(min = 6, max = 500)
     private String senha;
 
     public Usuario toUsuario() {

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.util.ObjectUtils;
 import br.com.thomaz.restapifinanceira.config.exception.RegistroNaoEncontradoException;
 import br.com.thomaz.restapifinanceira.config.exception.RegistroRepetidoException;
-import br.com.thomaz.restapifinanceira.form.RegistroForm;
+import br.com.thomaz.restapifinanceira.endpoint.form.RegistroForm;
 
 @SuppressWarnings("unchecked")
 public class Registros {

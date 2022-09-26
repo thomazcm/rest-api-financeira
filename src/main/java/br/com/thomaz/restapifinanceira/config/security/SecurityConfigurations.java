@@ -1,5 +1,6 @@
 package br.com.thomaz.restapifinanceira.config.security;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -35,11 +36,8 @@ public class SecurityConfigurations {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
         http.authorizeRequests()
-//        .antMatchers(HttpMethod.GET, "/receitas").permitAll()
-//        .antMatchers(HttpMethod.GET, "/resumo/*/*").permitAll()
         .antMatchers(HttpMethod.POST, "/auth").permitAll()
         .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
-        .antMatchers(HttpMethod.DELETE, "/admin").permitAll()
         .anyRequest().authenticated()
         .and().csrf().disable().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

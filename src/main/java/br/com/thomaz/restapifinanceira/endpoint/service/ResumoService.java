@@ -1,13 +1,11 @@
-package br.com.thomaz.restapifinanceira.controller.service;
+package br.com.thomaz.restapifinanceira.endpoint.service;
 
 import java.math.BigDecimal;
 import java.util.EnumMap;
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import br.com.thomaz.restapifinanceira.dto.ResumoMesDto;
+import br.com.thomaz.restapifinanceira.endpoint.dto.ResumoMesDto;
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;

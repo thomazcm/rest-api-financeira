@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.controller;
+package br.com.thomaz.restapifinanceira.endpoint;
 
 import java.util.List;
 import javax.validation.Valid;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.thomaz.restapifinanceira.config.exception.RegistroNaoEncontradoException;
 import br.com.thomaz.restapifinanceira.config.security.TokenService;
-import br.com.thomaz.restapifinanceira.dto.ReceitaDto;
-import br.com.thomaz.restapifinanceira.form.RegistroForm;
+import br.com.thomaz.restapifinanceira.endpoint.dto.ReceitaDto;
+import br.com.thomaz.restapifinanceira.endpoint.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 
 @RestController

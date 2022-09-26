@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.dto;
+package br.com.thomaz.restapifinanceira.endpoint.dto;
 
 public class TokenDto {
     

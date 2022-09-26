@@ -4,8 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.thomaz.restapifinanceira.form.RegistroForm;
+import br.com.thomaz.restapifinanceira.endpoint.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.model.CategoriaDespesa;
 import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;

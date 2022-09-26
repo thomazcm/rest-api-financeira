@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.form;
+package br.com.thomaz.restapifinanceira.endpoint.form;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 

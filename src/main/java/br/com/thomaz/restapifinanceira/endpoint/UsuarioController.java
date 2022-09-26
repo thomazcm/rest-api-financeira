@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.controller;
+package br.com.thomaz.restapifinanceira.endpoint;
 
 import java.net.URI;
 import javax.validation.Valid;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import br.com.thomaz.restapifinanceira.dto.UsuarioDto;
-import br.com.thomaz.restapifinanceira.form.UsuarioForm;
+import br.com.thomaz.restapifinanceira.endpoint.dto.UsuarioDto;
+import br.com.thomaz.restapifinanceira.endpoint.form.UsuarioForm;
 import br.com.thomaz.restapifinanceira.model.Usuario;
 import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 

@@ -1,8 +1,7 @@
 package br.com.thomaz.restapifinanceira.helper;
 
 import java.util.List;
-
-import br.com.thomaz.restapifinanceira.form.RegistroForm;
+import br.com.thomaz.restapifinanceira.endpoint.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.model.Despesa;
 import br.com.thomaz.restapifinanceira.model.Receita;
 import br.com.thomaz.restapifinanceira.model.Usuario;

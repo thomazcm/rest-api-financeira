@@ -1,5 +1,6 @@
 package br.com.thomaz.restapifinanceira.config.handler;
 
+
 public class FormErrorDto {
     
     private final String field;
