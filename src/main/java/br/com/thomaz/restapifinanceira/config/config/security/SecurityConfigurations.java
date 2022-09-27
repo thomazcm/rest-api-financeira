@@ -46,18 +46,18 @@ public class SecurityConfigurations {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
         http.authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/auth").permitAll()
-        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-        .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
-        .anyRequest().authenticated()
+            .antMatchers(HttpMethod.POST, "/auth", "/usuarios").permitAll()
+            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .anyRequest().authenticated()
         .and()
-        .csrf().disable()
-        .headers()
-        .addHeaderWriter(new StaticHeadersWriter(responseHeaders()))
-        .frameOptions().sameOrigin()
+            .cors()
         .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository),
+            .csrf().disable()
+            .headers().frameOptions().sameOrigin()
+        .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+            .addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository),
                 UsernamePasswordAuthenticationFilter.class)
         
         ;
@@ -84,7 +84,7 @@ public class SecurityConfigurations {
     CorsConfigurationSource configurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:8080");
+        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList(
                 HttpMethod.GET.name(),
                 HttpMethod.HEAD.name(),
@@ -93,7 +93,7 @@ public class SecurityConfigurations {
                 HttpMethod.DELETE.name()));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setMaxAge(1800L);
-        source.registerCorsConfiguration("/**", corsConfiguration); // you restrict your path here
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
     
