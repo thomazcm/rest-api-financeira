@@ -84,11 +84,12 @@ public class SecurityConfigurations {
     CorsConfigurationSource configurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
         corsConfiguration.setAllowedMethods(Arrays.asList(
                 HttpMethod.GET.name(),
                 HttpMethod.HEAD.name(),
                 HttpMethod.POST.name(),
+                HttpMethod.OPTIONS.name(),
                 HttpMethod.PUT.name(),
                 HttpMethod.DELETE.name()));
         corsConfiguration.setAllowCredentials(true);
