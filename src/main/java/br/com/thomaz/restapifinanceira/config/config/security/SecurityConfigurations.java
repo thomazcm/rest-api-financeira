@@ -17,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.Header;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
@@ -50,15 +51,13 @@ public class SecurityConfigurations {
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().authenticated()
         .and()
-            .cors().disable()
             .csrf().disable()
-            .headers().frameOptions().sameOrigin()
-        .and()
+//            .headers().frameOptions().sameOrigin()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
+            .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
             .addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository),
                 UsernamePasswordAuthenticationFilter.class)
-        
         ;
         return http.build();
     }
