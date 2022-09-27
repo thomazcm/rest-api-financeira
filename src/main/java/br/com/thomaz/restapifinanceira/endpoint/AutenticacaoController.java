@@ -38,8 +38,14 @@ public class AutenticacaoController {
             Authentication authentication = authManager.authenticate(userPassAuthToken);
             
             String token = tokenService.gerarToken(authentication);
+            ResponseEntity<TokenDto> responseEntity = ResponseEntity.ok(new TokenDto(token, "Bearer"));
             
-            return ResponseEntity.ok(new TokenDto(token, "Bearer"));
+            responseEntity.getHeaders().add("Access-Control-Allow-Origin", "http://localhost:8080");
+            responseEntity.getHeaders().add("Access-Control-Allow-Credentials", "true");
+            responseEntity.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            responseEntity.getHeaders().add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+            
+            return responseEntity;
             
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().build();
