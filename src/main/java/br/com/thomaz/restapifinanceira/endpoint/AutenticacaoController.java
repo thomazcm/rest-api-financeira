@@ -40,7 +40,7 @@ public class AutenticacaoController {
             Authentication authentication = authManager.authenticate(userPassAuthToken);
             String token = tokenService.gerarToken(authentication);
             return ResponseEntity.ok()
-                    .headers(responseHeaders())
+//                    .headers(responseHeaders())
                     .body(new TokenDto(token, "Bearer"));
             
         } catch (AuthenticationException e) {
