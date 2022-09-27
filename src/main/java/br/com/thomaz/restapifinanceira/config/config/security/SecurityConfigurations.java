@@ -37,9 +37,11 @@ public class SecurityConfigurations {
         
         http.authorizeRequests()
         .antMatchers(HttpMethod.POST, "/auth").permitAll()
+        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
         .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
         .anyRequest().authenticated()
-        .and().csrf().disable()
+        .and()
+        .csrf().disable()
         .headers().frameOptions().sameOrigin()
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
