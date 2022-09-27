@@ -50,7 +50,7 @@ public class AutenticacaoController {
     
     private HttpHeaders responseHeaders() {
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setAccessControlAllowOrigin("http://localhost:8080");
+        responseHeaders.setAccessControlAllowOrigin("http://localhost:8080/");
         responseHeaders.setAccessControlAllowCredentials(true);
         responseHeaders.setAccessControlAllowMethods(List.of(HttpMethod.GET, HttpMethod.POST, HttpMethod.OPTIONS));
         responseHeaders.setAccessControlAllowHeaders(List.of("Origin", "Content-Type", "Accept"));
