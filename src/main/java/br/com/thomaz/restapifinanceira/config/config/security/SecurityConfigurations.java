@@ -50,8 +50,7 @@ public class SecurityConfigurations {
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().authenticated()
         .and()
-            .cors()
-        .and()
+            .cors().disable()
             .csrf().disable()
             .headers().frameOptions().sameOrigin()
         .and()
@@ -80,23 +79,23 @@ public class SecurityConfigurations {
         return new BCryptPasswordEncoder();
     }
     
-    @Bean
-    CorsConfigurationSource configurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
-        corsConfiguration.setAllowedMethods(Arrays.asList(
-                HttpMethod.GET.name(),
-                HttpMethod.HEAD.name(),
-                HttpMethod.POST.name(),
-                HttpMethod.OPTIONS.name(),
-                HttpMethod.PUT.name(),
-                HttpMethod.DELETE.name()));
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setMaxAge(1800L);
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource configurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+//        corsConfiguration.setAllowedMethods(Arrays.asList(
+//                HttpMethod.GET.name(),
+//                HttpMethod.HEAD.name(),
+//                HttpMethod.POST.name(),
+//                HttpMethod.OPTIONS.name(),
+//                HttpMethod.PUT.name(),
+//                HttpMethod.DELETE.name()));
+//        corsConfiguration.setAllowCredentials(true);
+//        corsConfiguration.setMaxAge(1800L);
+//        source.registerCorsConfiguration("/**", corsConfiguration);
+//        return source;
+//    }
     
     private List<Header> responseHeaders() {
         HttpHeaders responseHeaders = new HttpHeaders();
