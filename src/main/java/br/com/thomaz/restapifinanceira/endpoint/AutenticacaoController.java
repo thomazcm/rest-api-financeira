@@ -1,7 +1,10 @@
 package br.com.thomaz.restapifinanceira.endpoint;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,22 +37,25 @@ public class AutenticacaoController {
         UsernamePasswordAuthenticationToken userPassAuthToken = form.toUserPassAuthToken();
         
         try {
-            
             Authentication authentication = authManager.authenticate(userPassAuthToken);
-            
             String token = tokenService.gerarToken(authentication);
-            ResponseEntity<TokenDto> responseEntity = ResponseEntity.ok(new TokenDto(token, "Bearer"));
-            
-            responseEntity.getHeaders().add("Access-Control-Allow-Origin", "http://localhost:8080");
-            responseEntity.getHeaders().add("Access-Control-Allow-Credentials", "true");
-            responseEntity.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-            responseEntity.getHeaders().add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
-            
-            return responseEntity;
+            return ResponseEntity.ok()
+                    .headers(responseHeaders())
+                    .body(new TokenDto(token, "Bearer"));
             
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+    private HttpHeaders responseHeaders() {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setAccessControlAllowOrigin("http://localhost:8080");
+        responseHeaders.setAccessControlAllowCredentials(true);
+        responseHeaders.setAccessControlAllowMethods(List.of(HttpMethod.GET, HttpMethod.POST, HttpMethod.OPTIONS));
+        responseHeaders.setAccessControlAllowHeaders(List.of("Origin", "Content-Type", "Accept"));
+        return responseHeaders;
+    }
+
     
 }
