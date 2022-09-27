@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.thomaz.restapifinanceira.config.security.TokenService;
+import br.com.thomaz.restapifinanceira.config.config.security.TokenService;
 import br.com.thomaz.restapifinanceira.endpoint.dto.TokenDto;
 import br.com.thomaz.restapifinanceira.endpoint.form.LoginForm;
 

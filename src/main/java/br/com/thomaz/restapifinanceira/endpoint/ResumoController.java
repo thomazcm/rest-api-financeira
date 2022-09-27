@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.thomaz.restapifinanceira.config.security.TokenService;
+import br.com.thomaz.restapifinanceira.config.config.security.TokenService;
 import br.com.thomaz.restapifinanceira.endpoint.dto.ResumoMesDto;
 import br.com.thomaz.restapifinanceira.endpoint.service.ResumoService;
 import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;

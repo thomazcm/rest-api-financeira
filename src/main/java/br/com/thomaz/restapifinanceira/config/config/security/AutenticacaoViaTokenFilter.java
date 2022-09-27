@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.config.security;
+package br.com.thomaz.restapifinanceira.config.config.security;
 
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
-
+        
         String token = request.getHeader("Authorization");
         boolean ehValido = service.ehValido(token);
         

@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.config.security;
+package br.com.thomaz.restapifinanceira.config.config.security;
 
 import java.util.Date;
 import java.util.NoSuchElementException;

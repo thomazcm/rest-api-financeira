@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.config.security;
+package br.com.thomaz.restapifinanceira.config.config.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,9 @@ public class SecurityConfigurations {
         .and().csrf().disable().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository),
-                UsernamePasswordAuthenticationFilter.class);
+                UsernamePasswordAuthenticationFilter.class)
+        
+        ;
         return http.build();
     }
 
