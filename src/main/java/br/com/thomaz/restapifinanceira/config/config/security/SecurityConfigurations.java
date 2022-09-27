@@ -39,8 +39,10 @@ public class SecurityConfigurations {
         .antMatchers(HttpMethod.POST, "/auth").permitAll()
         .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
         .anyRequest().authenticated()
-        .and().csrf().disable().sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and().csrf().disable()
+        .headers().frameOptions().sameOrigin()
+        .and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository),
                 UsernamePasswordAuthenticationFilter.class)
         
