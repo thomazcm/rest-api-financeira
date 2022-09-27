@@ -54,7 +54,7 @@ public class ReceitaController {
 
         if (descricao == null) {
             var receitas = ReceitaDto.listar(registros.getReceitas());
-            return ResponseEntity.ok().headers(responseHeaders()).body(receitas);
+            return ResponseEntity.ok().body(receitas);
         }
         var receitas = ReceitaDto.listar(registros.buscarReceita(descricao));
         return ResponseEntity.ok().body(receitas);
@@ -109,12 +109,5 @@ public class ReceitaController {
     }
 
     
-    private HttpHeaders responseHeaders() {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setAccessControlAllowOrigin("http://localhost:8080");
-        responseHeaders.setAccessControlAllowCredentials(true);
-        responseHeaders.setAccessControlAllowMethods(List.of(HttpMethod.GET, HttpMethod.POST, HttpMethod.OPTIONS));
-        responseHeaders.setAccessControlAllowHeaders(List.of("Origin", "Content-Type", "Accept"));
-        return responseHeaders;
-    }
+    
 }
