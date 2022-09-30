@@ -1,6 +1,7 @@
 package br.com.thomaz.restapifinanceira.endpoint.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.EnumMap;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class ResumoService {
             List<Despesa> despesasDoMes) {
 
         var totalReceitas = receitasDoMes.stream()
-                .map(r -> r.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(r -> r.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2,RoundingMode.HALF_DOWN);
         var totalDespesas = despesasDoMes.stream()
-                .map(r -> r.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(r -> r.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2,RoundingMode.HALF_DOWN);
         var gastosPorCategoria = calcularGastosPorCategoria(despesasDoMes);
         return ResponseEntity
                 .ok(new ResumoMesDto(totalReceitas, totalDespesas, gastosPorCategoria));

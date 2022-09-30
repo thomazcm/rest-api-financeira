@@ -1,6 +1,7 @@
 package br.com.thomaz.restapifinanceira.endpoint.form;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -35,11 +36,11 @@ public class RegistroForm {
     private String categoria;
 
     public Receita toReceita() {
-        return new Receita(descricao, new BigDecimal(valor), gerarData());
+        return new Receita(descricao, new BigDecimal(valor).setScale(2,RoundingMode.HALF_DOWN), gerarData());
     }
 
     public Despesa toDespesa() {
-        return new Despesa(descricao, new BigDecimal(valor), gerarData(), gerarCategoria());
+        return new Despesa(descricao, new BigDecimal(valor).setScale(2,RoundingMode.HALF_DOWN), gerarData(), gerarCategoria());
     }
 
     public LocalDate gerarData() {
