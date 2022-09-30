@@ -1,6 +1,7 @@
 package br.com.thomaz.restapifinanceira.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,7 +93,7 @@ public class Registros {
     private Registro atualizarRegistro(Registro registro, RegistroForm form) {
         registro.setDescricao(form.getDescricao());
         registro.setData(form.gerarData());
-        registro.setValor(new BigDecimal(form.getValor()));
+        registro.setValor(new BigDecimal(form.getValor()).setScale(2, RoundingMode.HALF_DOWN));
         return registro;
     }
 
