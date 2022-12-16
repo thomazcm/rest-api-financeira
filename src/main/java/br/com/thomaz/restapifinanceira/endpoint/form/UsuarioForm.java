@@ -12,7 +12,7 @@ public class UsuarioForm {
     private String nome;
     @NotNull @Email
     private String email;
-    @NotBlank @Length(min = 6, max = 500)
+    @NotBlank @Length(min = 6, max = 1000)
     private String senha;
 
     public Usuario toUsuario() {
