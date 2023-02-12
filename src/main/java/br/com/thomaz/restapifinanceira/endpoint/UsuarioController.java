@@ -44,8 +44,10 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDto> cadastroDemo(@RequestBody @Valid UsuarioForm form) {
         
         var usuarioDemo = service.gerarUsuarioDemo(form);
+        usuarioDemo.setSenha(encoder.encode(usuarioDemo.getSenha()));
         repository.save(usuarioDemo);
         URI uri = UriComponentsBuilder.fromPath("usuarios/{id}").buildAndExpand(usuarioDemo.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDto(usuarioDemo));
+        
     }
 }
