@@ -48,6 +48,5 @@ public class UsuarioController {
         repository.save(usuarioDemo);
         URI uri = UriComponentsBuilder.fromPath("usuarios/{id}").buildAndExpand(usuarioDemo.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDto(usuarioDemo));
-        
     }
 }

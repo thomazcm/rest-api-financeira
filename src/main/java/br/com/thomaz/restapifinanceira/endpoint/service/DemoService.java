@@ -56,7 +56,7 @@ public class DemoService {
             data = data.minusMonths(1);
 
             if (chance > new Random().nextInt(0, 100)) {
-                var valor = valorAleatorioEntre(min, max);
+                var valor = bigDecimalAleatorioEntre(min, max);
                 var receita = new Receita(descricao, valor, data);
                 receitas.add(receita);
             }
@@ -99,29 +99,46 @@ public class DemoService {
 
         return despesas;
     }
+    
+    private void criarDespesas(List<Despesa> despesas, 
+            String descricao, int valorMin, int valorMax, int chance, String categoria) {
+        criarDespesas(despesas, descricao, valorMin, valorMax, chance, categoria, 0);
+    }
 
-    private void criarDespesas(List<Despesa> despesas, String descricao, int min, int max, int chance,
-            String categoria) {
+    private void criarDespesas(List<Despesa> despesas, 
+            String descricao, int valorMin, int valorMax, int chance, String categoria, int dia) {
 
         var mes = LocalDate.now().getMonthValue();
         var ano = LocalDate.now().getYear();
-        var data = LocalDate.of(ano, mes, 1).plusMonths(1);
+        var dataBase = LocalDate.of(ano, mes, 1).plusMonths(1);
 
         for (int i = 0; i < 18; i++) {
-            data = data.minusMonths(1);
-
+            dataBase = dataBase.minusMonths(1);
+            
+            LocalDate data;
+            if (dia == 0) {
+                data = dataComDiaAleatorio(dataBase);
+            } else {
+                data = LocalDate.of(dataBase.getYear(), dataBase.getMonthValue(), dia);
+            }
+            
             if (chance > new Random().nextInt(0, 100)) {
-                var valor = valorAleatorioEntre(min, max);
+                var valor = bigDecimalAleatorioEntre(valorMin, valorMax);
                 var despesa = new Despesa(descricao, valor, data,
                         CategoriaDespesa.fromString(categoria, CategoriaDespesa.OUTRAS));
                 despesas.add(despesa);
             }
 
         }
-
     }
 
-    private BigDecimal valorAleatorioEntre(int min, int max) {
+    private LocalDate dataComDiaAleatorio(LocalDate dataBase) {
+        int ultimoDiaMes = dataBase.plusMonths(1).minusDays(1).getDayOfMonth();
+        int dia = new Random().nextInt(1, ultimoDiaMes);
+        return LocalDate.of(dataBase.getYear(), dataBase.getMonthValue(), dia);
+    }
+
+    private BigDecimal bigDecimalAleatorioEntre(int min, int max) {
         int valor = new Random().nextInt(min, max);
         return new BigDecimal(valor).setScale(2);
     }
