@@ -46,14 +46,19 @@ public class DemoService {
 
         return receitas;
     }
-
+    
     private void criarReceitas(List<Receita> receitas, String descricao, int min, int max, int chance) {
+        criarReceitas(receitas, descricao, min, max, chance, 0);
+    }
+
+    private void criarReceitas(List<Receita> receitas, String descricao, int min, int max, int chance, int dia) {
         var mes = LocalDate.now().getMonthValue();
         var ano = LocalDate.now().getYear();
-        var data = LocalDate.of(ano, mes, 1).plusMonths(1);
+        var dataBase = LocalDate.of(ano, mes, 1).plusMonths(1);
 
         for (int i = 0; i < 18; i++) {
-            data = data.minusMonths(1);
+            dataBase = dataBase.minusMonths(1);
+            LocalDate data = gerarData(dia, dataBase);
 
             if (chance > new Random().nextInt(0, 100)) {
                 var valor = bigDecimalAleatorioEntre(min, max);
@@ -68,34 +73,34 @@ public class DemoService {
         var despesas = new ArrayList<Despesa>();
 
         int valorAluguel = (new Random().nextInt(80, 150) * 10);
-        criarDespesas(despesas, "Aluguel", valorAluguel, valorAluguel + 1, 100, "Moradia");
+        criarDespesas(despesas, "Aluguel", valorAluguel, valorAluguel + 1, 100, "Moradia", 10);
         int valorCondominio = (new Random().nextInt(30, 70) * 10);
-        criarDespesas(despesas, "Condomínio", valorCondominio, valorCondominio+1, 100, "Moradia");
-        criarDespesas(despesas, "Água", 70, 120, 100, "Moradia");
-        criarDespesas(despesas, "Luz", 100, 250, 100, "Moradia");
+        criarDespesas(despesas, "Condomínio", valorCondominio, valorCondominio+1, 100, "Moradia", 10);
+        criarDespesas(despesas, "Água", 70, 120, 100, "Moradia", 10);
+        criarDespesas(despesas, "Luz", 100, 250, 100, "Moradia", 10);
         criarDespesas(despesas, "Gás", 100, 120, 100, "Moradia");
         
         criarDespesas(despesas, "Supermercado", 300, 800, 100, "Alimentação");
         criarDespesas(despesas, "Delivery", 50, 300, 100, "Alimentação");
         criarDespesas(despesas, "Padaria", 80, 200, 100, "Alimentação");
         
-        criarDespesas(despesas, "Passagem", 80, 200, 35, "Transporte");
+        criarDespesas(despesas, "Passagem", 80, 200, 25, "Transporte");
         criarDespesas(despesas, "Gasolina", 150, 400, 100, "Transporte");
-        criarDespesas(despesas, "Pedágio", 15, 30, 15, "Transporte");
+        criarDespesas(despesas, "Pedágio", 15, 30, 10, "Transporte");
         
         criarDespesas(despesas, "Restaurante", 100, 250, 50, "Lazer");
         criarDespesas(despesas, "Cinema", 30, 60, 60, "Lazer");
         criarDespesas(despesas, "Ingressos Show", 120, 121, 30, "Lazer");
         
         int valorUnimed = (new Random().nextInt(25, 60) * 10);
-        criarDespesas(despesas, "Plano de Saúde", valorUnimed, valorUnimed+1, 15, "Saúde");
-        criarDespesas(despesas, "Dentista", 400, 800, 20, "Saúde");
+        criarDespesas(despesas, "Plano de Saúde", valorUnimed, valorUnimed+1, 15, "Saúde", 10);
+        criarDespesas(despesas, "Dentista", 400, 800, 15, "Saúde");
         
         criarDespesas(despesas, "Bombeiro", 100, 250, 10, "Imprevistos");
         criarDespesas(despesas, "Eletricista", 100, 250, 10, "Imprevistos");
         criarDespesas(despesas, "Veterinário", 150, 250, 15, "Imprevistos");
         
-        criarDespesas(despesas, "Faculdade", 580, 581, 100, "Educação");
+        criarDespesas(despesas, "Faculdade", 580, 581, 100, "Educação", 10);
 
         return despesas;
     }
@@ -114,13 +119,7 @@ public class DemoService {
 
         for (int i = 0; i < 18; i++) {
             dataBase = dataBase.minusMonths(1);
-            
-            LocalDate data;
-            if (dia == 0) {
-                data = dataComDiaAleatorio(dataBase);
-            } else {
-                data = LocalDate.of(dataBase.getYear(), dataBase.getMonthValue(), dia);
-            }
+            LocalDate data = gerarData(dia, dataBase);
             
             if (chance > new Random().nextInt(0, 100)) {
                 var valor = bigDecimalAleatorioEntre(valorMin, valorMax);
@@ -129,6 +128,14 @@ public class DemoService {
                 despesas.add(despesa);
             }
 
+        }
+    }
+
+    private LocalDate gerarData(int dia, LocalDate dataBase) {
+        if (dia == 0) {
+            return dataComDiaAleatorio(dataBase);
+        } else {
+            return LocalDate.of(dataBase.getYear(), dataBase.getMonthValue(), dia);
         }
     }
 
