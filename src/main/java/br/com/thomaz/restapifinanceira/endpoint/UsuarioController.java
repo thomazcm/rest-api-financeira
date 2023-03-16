@@ -1,15 +1,21 @@
 package br.com.thomaz.restapifinanceira.endpoint;
 
 import java.net.URI;
+import java.util.Optional;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import br.com.thomaz.restapifinanceira.endpoint.dto.UsuarioDto;
 import br.com.thomaz.restapifinanceira.endpoint.form.UsuarioForm;
 import br.com.thomaz.restapifinanceira.endpoint.service.DemoService;
@@ -31,7 +37,6 @@ public class UsuarioController {
     
     @PostMapping
     public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioForm form){
-        
         Usuario usuario = form.toUsuario();
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         repository.save(usuario);
@@ -44,9 +49,26 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDto> cadastroDemo(@RequestBody @Valid UsuarioForm form) {
         
         var usuarioDemo = service.gerarUsuarioDemo(form);
+        usuarioDemo.setEhDemo(true);
         usuarioDemo.setSenha(encoder.encode(usuarioDemo.getSenha()));
         repository.save(usuarioDemo);
         URI uri = UriComponentsBuilder.fromPath("usuarios/{id}").buildAndExpand(usuarioDemo.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDto(usuarioDemo));
     }
+    
+    @DeleteMapping("/{email}")
+    public ResponseEntity<?> excluirUsuarioDemo(@PathVariable String email){
+        Optional<Usuario> usuarioOptional = repository.findByEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var usuario = usuarioOptional.get();
+        if (usuario.ehDemo()) {
+            repository.deleteById(usuario.getId());
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+    
+
 }

@@ -19,11 +19,21 @@ public class Usuario implements UserDetails{
     private String senha;
     private Collection<Perfil> perfis = new ArrayList<>();
     private Registros registros = new Registros();
+    private Boolean ehUsuarioDemo;
+
+    public Boolean ehDemo() {
+        return ehUsuarioDemo;
+    }
+
+    public void setEhDemo(Boolean ehDemo) {
+        this.ehUsuarioDemo = ehDemo;
+    }
 
     public Usuario(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.ehUsuarioDemo = false;
     }
 
     public Registros getRegistros() {
