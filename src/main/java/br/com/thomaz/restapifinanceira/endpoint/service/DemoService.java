@@ -34,8 +34,8 @@ public class DemoService {
 
         int valorSalario = (new Random().nextInt(30, 55)) * 100;
 
-        criarReceitas(receitas, "Salário", valorSalario, valorSalario + 1, 100);
-        criarReceitas(receitas, "Rendimentos", 150, 300, 100);
+        criarReceitas(receitas, "Salário", valorSalario, valorSalario + 1, 100, 5);
+        criarReceitas(receitas, "Rendimentos", 150, 300, 100, 1);
         criarReceitas(receitas, "Reembolso", 100, 700, 15);
         criarReceitas(receitas, "Venda", 150, 800, 20);
         criarReceitas(receitas, "Pagamento Freela", 300, 700, 30);

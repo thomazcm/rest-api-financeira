@@ -1,0 +1,48 @@
+[33md48ce79[m[33m ([m[1;36mHEAD -> [m[1;32mdesenvolvimento[m[33m)[m Limpeza da Security Configurations
+[33m3dc05b5[m Dias aleatorios para receitas demo
+[33ma76e80c[m Dias aleatorios para despesas demo
+[33ma226322[m[33m ([m[1;31mheroku/master[m[33m, [m[1;32mmaster[m[33m)[m implementação do cadastro demo
+[33mdb44c96[m implementação do funcionario demo
+[33m81659ae[m ajustando CORS
+[33m5c96974[m ajustando CORS
+[33m0961665[m[33m ([m[1;32mdatabase-searches[m[33m)[m Ajustando scale dos bigdecimals no resumo
+[33m13e1bec[m Ajustando scale dos bigdecimals no resumo
+[33m7874fed[m Allow response try 5
+[33me1ac2cd[m Allow response try 5
+[33mad38e00[m Allow response try 5
+[33m0431478[m Allow response try 5
+[33mdffcb01[m Allow response try 5
+[33m6088b83[m Allow response try 5
+[33m9b80613[m Allow response try 4
+[33md3ba10d[m Allow response try 4
+[33m2a3ce44[m Allow response try 3
+[33me18e292[m Allow response try 2
+[33m4f70211[m Allow response try 2
+[33m5851fdd[m Allow response try 2
+[33m43ad206[m Allow resposne
+[33mc833b37[m Consertando tamanho máximo da senha do usuario
+[33m46038dc[m password encoder error
+[33md75d0bb[m[33m ([m[1;31morigin/master[m[33m, [m[1;31mheroku/usuarioDatabase[m[33m, [m[1;32musuarioDatabase[m[33m)[m deploy heroku
+[33me619ed4[m[33m ([m[1;31morigin/usuarioDatabase[m[33m)[m deploy
+[33m95f1c52[m deploy Heroku
+[33me1f766f[m deploy
+[33m88db502[m testes dos endpoints de resumos reimplementados
+[33mdef3815[m testes dos endpoints de despesas reimplementados
+[33md6520a6[m testes dos endpoints de receitas reimplementados
+[33m09ea86a[m todas funçoes restauradas com autenticação
+[33m50dacb6[m branch para mudanca na estrutura dos dados
+[33m6d452b0[m autenticacao e cadastro de usuario rudimentar implementado
+[33m98c060e[m implementado paginação
+[33mda87e25[m 0.0.3 refatorado services, implementado controllerAdvices
+[33mf47a4c9[m 0.0.2 finalizado implementação, sem autenticação
+[33m7f684dd[m Correção Getmapping DespesaController listarPorMes
+[33m1b2c8a3[m Implementado resumo do mes, com testes de unidade
+[33mf0bdd1a[m Merge branch 'master' of https://github.com/thomazcm/rest-api-financeira
+[33m4613bcf[m Delete .mvn/wrapper directory
+[33mc779601[m Delete mvnw.cmd
+[33me7ab407[m Delete mvnw
+[33m804048d[m imports
+[33mcc58d74[m Delete TestController.java
+[33m34c5be1[m Detalhamento de receitas e despesas por mes, com testes ja criados
+[33m36f7acb[m Testes automatizados da funcionalidade CRUD completos
+[33mb85e4b9[m Commit inicial, funcionalidade CRUD implementada
