@@ -3,13 +3,9 @@ package br.com.thomaz.restapifinanceira.endpoint.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import javax.validation.Valid;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.thomaz.restapifinanceira.endpoint.form.UsuarioForm;

@@ -1,12 +1,8 @@
 package br.com.thomaz.restapifinanceira.config.config.security;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,12 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.Header;
-import org.springframework.security.web.header.writers.StaticHeadersWriter;
-import org.springframework.security.web.server.header.ContentTypeOptionsServerHttpHeadersWriter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 
 @EnableWebSecurity
@@ -96,18 +87,18 @@ public class SecurityConfigurations {
 //        return source;
 //    }
     
-    private List<Header> responseHeaders() {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setAccessControlAllowOrigin("http://localhost:8080");
-        responseHeaders.setAccessControlAllowCredentials(true);
-        responseHeaders.setAccessControlAllowMethods(List.of(HttpMethod.GET, HttpMethod.POST, HttpMethod.OPTIONS));
-        responseHeaders.setAccessControlAllowHeaders(List.of("Origin", "Content-Type", "Accept"));
-        
-        List<Header> headers = new ArrayList<>();
-        responseHeaders.forEach((h,v) -> headers.add(new Header(h, v.get(0))));
-        
-        return headers;
-    }
+//    private List<Header> responseHeaders() {
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        responseHeaders.setAccessControlAllowOrigin("http://localhost:8080");
+//        responseHeaders.setAccessControlAllowCredentials(true);
+//        responseHeaders.setAccessControlAllowMethods(List.of(HttpMethod.GET, HttpMethod.POST, HttpMethod.OPTIONS));
+//        responseHeaders.setAccessControlAllowHeaders(List.of("Origin", "Content-Type", "Accept"));
+//        
+//        List<Header> headers = new ArrayList<>();
+//        responseHeaders.forEach((h,v) -> headers.add(new Header(h, v.get(0))));
+//        
+//        return headers;
+//    }
 
 
 }
