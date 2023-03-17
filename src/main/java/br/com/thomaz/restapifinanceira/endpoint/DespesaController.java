@@ -70,7 +70,7 @@ public class DespesaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DespesaDto> detalhar(
-            @RequestHeader(name = "Authorization") String token, @PathVariable Long id) {
+            @RequestHeader(name = "Authorization") String token, @PathVariable int id) {
         var registros = tokenService.usuarioFromToken(token, repository).getRegistros();
 
         try {
@@ -83,7 +83,7 @@ public class DespesaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<DespesaDto> atualizar(@RequestHeader(name = "Authorization") String token,
-            @Valid @RequestBody RegistroForm form, @PathVariable Long id) {
+            @Valid @RequestBody RegistroForm form, @PathVariable int id) {
         var usuario = tokenService.usuarioFromToken(token, repository);
         
         try {
@@ -97,7 +97,7 @@ public class DespesaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@RequestHeader(name = "Authorization") String token,
-            @PathVariable Long id) {
+            @PathVariable int id) {
         var usuario = tokenService.usuarioFromToken(token, repository);
         if (usuario.getRegistros().deletarDespesa(id)) {
             repository.save(usuario);
