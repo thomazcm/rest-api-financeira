@@ -19,7 +19,7 @@ public class TesteHelper {
 
     public void atributosIguais(Despesa despesa, DespesaDto despesaDto) {
         assertEquals(despesa.getDescricao(), despesaDto.getDescricao());
-        assertEquals(despesa.getValor(), new BigDecimal(despesaDto.getValor()));
+        assertEquals(despesa.getValor(), new BigDecimal(despesaDto.getValor()).setScale(2));
         assertEquals(despesa.getData(), despesaDto.getData());
         assertEquals(despesa.getCategoria(),
                 CategoriaDespesa.fromString(despesaDto.getCategoria(), null));

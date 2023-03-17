@@ -107,7 +107,7 @@ class ReceitasTest {
     
     @Test
     void deveDetalharSeExistir() {
-        Long id = 1L;
+        int id = 1;
         var amostra = usuario.getRegistros().getReceitas().get(0);
         
         var resposta = controller.detalhar(TOKEN, id);
@@ -115,7 +115,7 @@ class ReceitasTest {
         helper.codigo200(resposta);
         helper.atributosIguais(amostra, receitaDto);
         
-        id = 10L;
+        id = 10;
         resposta = controller.detalhar(TOKEN, id);
         helper.codigo404(resposta);
         verify(tokenService, times(2)).usuarioFromToken(TOKEN, repository);
@@ -125,7 +125,7 @@ class ReceitasTest {
     void deveAtualizarSeExisteAndValida() {
         var form = Criar.receitaForm();
         var amostra = form.toReceita();
-        var resposta = controller.atualizar(TOKEN, form, 4L);
+        var resposta = controller.atualizar(TOKEN, form, 4);
         var receitaDto = resposta.getBody();
         var receitaAtualizada = usuario.getRegistros().getReceitas().get(3);
         
@@ -141,7 +141,7 @@ class ReceitasTest {
         RegistroForm form = Criar.receitaForm();
         form.setMes(2);
         try {
-            controller.atualizar(TOKEN, form, 4L);
+            controller.atualizar(TOKEN, form, 4);
             fail();
         } catch(RegistroRepetidoException e) {
         }
@@ -149,7 +149,7 @@ class ReceitasTest {
         form.setMes(2);
         form.setDia(30);
         try {
-            controller.atualizar(TOKEN, form, 4L);
+            controller.atualizar(TOKEN, form, 4);
             fail();
         } catch(DateTimeException e) {
         }
@@ -159,12 +159,12 @@ class ReceitasTest {
     
     @Test
     void deveDeletarSeExiste() {
-        Long id = 10L;
+        int id = 10;
         var resposta = controller.deletar(TOKEN, id);
         helper.codigo404(resposta);
         assertEquals(5, usuario.getRegistros().getReceitas().size());
         
-        id = 1L;
+        id = 1;
         resposta = controller.deletar(TOKEN, id);
         helper.codigo200(resposta);
         assertEquals(4, usuario.getRegistros().getReceitas().size());

@@ -44,13 +44,13 @@ public class Registros {
         return despesa;
     }
 
-    public Receita atualizarReceita(Long id, RegistroForm form) {
+    public Receita atualizarReceita(int id, RegistroForm form) {
         var receita = (Receita) atualizarRegistro(buscar(id, receitas()), form);
         verificaRepeticao(receita, receitas());
         return receita;
     }
 
-    public Despesa atualizarDespesa(Long id, RegistroForm form) {
+    public Despesa atualizarDespesa(int id, RegistroForm form) {
         var despesa = (Despesa) atualizarRegistro(buscar(id, despesas()), form);
         verificaRepeticao(despesa, despesas());
         despesa.setCategoria(
@@ -58,11 +58,11 @@ public class Registros {
         return despesa;
     }
 
-    public Receita buscarReceita(Long id) {
+    public Receita buscarReceita(int id) {
         return (Receita) buscar(id, receitas());
     }
 
-    public Despesa buscarDespesa(Long id) {
+    public Despesa buscarDespesa(int id) {
         return (Despesa) buscar(id, despesas());
     }
 
@@ -82,11 +82,11 @@ public class Registros {
         return (List<Despesa>) buscar(ano, mes, despesas());
     }
 
-    public boolean deletarReceita(Long id) {
+    public boolean deletarReceita(int id) {
         return receitas.removeIf(r -> r.getId() == id);
     }
 
-    public boolean deletarDespesa(Long id) {
+    public boolean deletarDespesa(int id) {
         return despesas.removeIf(d -> d.getId() == id);
     }
 
@@ -107,7 +107,7 @@ public class Registros {
         }
     }
 
-    private Registro buscar(Long id, List<Registro> registros) {
+    private Registro buscar(int id, List<Registro> registros) {
         var optional = registros.stream().filter(r -> r.getId() == id).findFirst();
         if (optional.isEmpty()) {
             throw new RegistroNaoEncontradoException("Registro não encontrado com o id " + id);
