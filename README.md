@@ -14,6 +14,8 @@
 
 :small_blue_diamond: [Funcionalidades](#funcionalidades)
 
+:small_blue_diamond: [Acesso](#acesso)
+
 :small_blue_diamond: [Pré-Requisitos e como Rodar o Servidor](#pré-requisitos)
 
 :small_blue_diamond: [Segurança](#segurança)
@@ -26,12 +28,14 @@
 
 <p align="justify">
   API REST desenvolvida para fornecer a configuração de back-end para o aplicativo de controle de finanças de pessoais Finanças Webapp.
-  A API foi desenvolvida em Java utilizando o framework Spring, utiliza um sistema de autenticação stateless e banco de dados MongoDB. 
-  
-  Projeto concluído e suas funcionalidades já podem ser acessadas [através do aplicativo web](https://webapp-financeira.herokuapp.com).
-  
+  A API foi desenvolvida em Java utilizando o framework Spring, utiliza um sistema de autenticação stateless e o banco de dados MongoDB. 
 </p>
 
+## Acesso
+  As funcionalidades da API podem ser acessadas [através do aplicativo web](https://webapp-financeira.herokuapp.com) que utiliza os endpoints para seu funcionamento.
+  
+  Caso queira rodar o servidor localmente [siga os passos listados aqui](#pré-requisitos).
+  
 ## Funcionalidades
 
 :heavy_check_mark: Cadastro e autenticação de usuários
@@ -40,7 +44,20 @@
 
 :heavy_check_mark: Consulta, edição e exclusão de despesas e receitas já cadastradas pelo usuário autenticado
 
-:heavy_check_mark: Consulta de um resumo das despesas, receitas, e saldo de cada mês do usuário 
+:heavy_check_mark: Consulta de um resumo das despesas, receitas e saldo de cada mês do usuário 
 
 :heavy_check_mark: Geração de usuário demo com despesas e receitas variadas já cadastradas para demonstração
+
+## Pré-Requisitos :warning:
+  Para rodar o servidor localmente você precisa ter instalado as seguintes ferramentas: [JDK](https://www.java.com/pt-BR/download/), [Git](https://git-scm.com/) e [Maven](https://maven.apache.org/install.html).
+  
+## Como rodar a aplicação :arrow_forward:
+
+```
+#Clone este repositório
+git clone https://github.com/thomazcm/rest-api-financeira
+
+#Navegue para a pasta raiz do projeto
+cd rest-api-financeira
+```
 
