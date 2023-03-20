@@ -50,8 +50,7 @@
 ## Pré-Requisitos
   Para rodar o servidor localmente você precisa ter instalado as seguintes ferramentas: [JDK](https://www.java.com/pt-BR/download/), [Git](https://git-scm.com/) e [Maven](https://maven.apache.org/install.html).
   
-  Além disso, para criar seu próprio banco de dados, [ crie uma conta grauita no MongoDB Cloud  ](https://account.mongodb.com/account/register).
-  Na aba "Database Deployments", clique em Browse Collections e cria uma nova Database.
+  Além disso, para criar seu próprio banco de dados, [é preciso ter uma conta grauita no MongoDB Cloud](https://account.mongodb.com/account/register).
   
 ## Como rodar a aplicação :arrow_forward:
 
@@ -59,9 +58,31 @@
 #Clone este repositório
 git clone https://github.com/thomazcm/rest-api-financeira
 
-#Na pasta raiz do projeto
+```
 
-#Navegue para a pasta raiz do projeto
-cd rest-api-financeira
+Na página do [MongoDB Atlas](https://cloud.mongodb.com/), clique em "Browse Collections" e crie uma nova Database com o nome que deseja usar.
+
+Volte até a pagina inicial, clique em "Connect" e em seguida "Connect your Application". Copie a URI para se conectar ao seu banco de dados.
+
+Por fim, [crie uma nova JWT key](https://www.javainuse.com/jwtgenerator) para que sejam gerados os tokens de autenticação do seu servidor. 
+
+Popule o arquivo env.properties na pasta raiz do repositório com as configurações do seu banco de dados:
+
+```
+DB_URI=
+DB_DATABASE=
+JWT_SECRET=
+
+#Instruções
+#DB_URI=Cole aqui a sua URI do MongoDB
+#DB_DATABASE=Nome da database que foi criada
+#JWT_SECRET=Cole aqui sua JWT key
+```
+
+Por fim, navegue na linha de comando até a raiz do projeto e execute o comando:
+```
+mvnw spring-boot:run
+
+## O servidor inciará na porta:8080 - acesse as endpoints por <http://localhost:8080> 
 ```
 
