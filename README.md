@@ -12,13 +12,12 @@
 
 :small_blue_diamond: [Descrição do projeto](#descrição-do-projeto)
 
-:small_blue_diamond: [Funcionalidades](#funcionalidades)
 
 :small_blue_diamond: [Acesso](#acesso)
 
-:small_blue_diamond: [Pré-Requisitos e como Rodar o Servidor](#pré-requisitos)
+:small_blue_diamond: [Funcionalidades](#funcionalidades)
 
-:small_blue_diamond: [Segurança](#segurança)
+:small_blue_diamond: [Pré-Requisitos e como Rodar o Servidor](#pré-requisitos)
 
 :small_blue_diamond: [Tecnologias](#Tecnologias)
 
@@ -48,14 +47,19 @@
 
 :heavy_check_mark: Geração de usuário demo com despesas e receitas variadas já cadastradas para demonstração
 
-## Pré-Requisitos :warning:
+## Pré-Requisitos
   Para rodar o servidor localmente você precisa ter instalado as seguintes ferramentas: [JDK](https://www.java.com/pt-BR/download/), [Git](https://git-scm.com/) e [Maven](https://maven.apache.org/install.html).
+  
+  Além disso, para criar seu próprio banco de dados, [ crie uma conta grauita no MongoDB Cloud  ](https://account.mongodb.com/account/register).
+  Na aba "Database Deployments", clique em Browse Collections e cria uma nova Database.
   
 ## Como rodar a aplicação :arrow_forward:
 
 ```
 #Clone este repositório
 git clone https://github.com/thomazcm/rest-api-financeira
+
+#Na pasta raiz do projeto
 
 #Navegue para a pasta raiz do projeto
 cd rest-api-financeira
