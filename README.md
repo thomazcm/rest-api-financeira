@@ -158,6 +158,10 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Postman]() - Testes de API
 - [Eclipse]() e [VSCode]() - Editores
 
+## 📝 Licença
+
+Este projeto esta sob a licença [MIT](./LICENSE).
+
 ## Autor
 <b>Thomaz Machado</b>🚀<br />
  <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/71472870?s=460&u=61b426b901b8fe02e12019b1fdb67bf0072d4f00&v=4" width="100px;" alt=""/><br />
