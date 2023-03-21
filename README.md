@@ -12,22 +12,21 @@
 
 :small_blue_diamond: [Descrição do projeto](#descrição-do-projeto)
 
-
 :small_blue_diamond: [Acesso](#acesso)
 
 :small_blue_diamond: [Funcionalidades](#funcionalidades)
 
 :small_blue_diamond: [Pré-Requisitos e como Rodar o Servidor](#pré-requisitos)
 
-:small_blue_diamond: [Tecnologias](#Tecnologias)
+:small_blue_diamond: [Tecnologias](#tecnologias)
 
 :small_blue_diamond: [Autor](#autor)
 
 ## Descrição do projeto 
 
 <p align="justify">
-  API REST desenvolvida para fornecer a configuração de back-end para o aplicativo de controle de finanças de pessoais Finanças Webapp.
-  A API foi desenvolvida em Java utilizando o framework Spring, utiliza um sistema de autenticação stateless e o banco de dados MongoDB. 
+  API REST desenvolvida para fornecer a configuração de back-end para o aplicativo de controle de finanças de pessoais Finanças Webapp.<br />
+  API desenvolvida em Java com o framework Spring, utiliza um sistema de autenticação stateless e banco de dados MongoDB. 
 </p>
 
 ## Acesso
@@ -141,10 +140,29 @@ JWT_SECRET=
 #JWT_SECRET=Cole aqui sua JWT key
 ```
 
-Por fim, navegue na linha de comando até a raiz do projeto e execute o comando:
+6. Por fim, navegue na linha de comando até a raiz do projeto e execute o comando:
 ```
 mvnw spring-boot:run
 
 ## O servidor inciará na porta:8080 - acesse as endpoints por <http://localhost:8080> 
 ```
 
+## Tecnologias
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- [Spring Boot 2.7.2]() - Framework
+- [Maven]() - Gerenciamento de Dependências
+- [Spring Security]() e [JJWT]() - Segurança
+- [MongoDB Atlas]() - Banco de Dados
+- [Mockito 4.5.1]() - Testes de Unidade
+- [Postman]() - Testes de API
+- [Eclipse]() e [VSCode]() - Editores
+
+## Autor
+<b>Thomaz Machado</b>🚀<br />
+ <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/71472870?s=460&u=61b426b901b8fe02e12019b1fdb67bf0072d4f00&v=4" width="100px;" alt=""/><br />
+Projeto desenvolvido por Thomaz Machado 👊 Entre em contato!  
+
+[![Linkedin Badge](https://img.shields.io/badge/-Thomaz-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/tgmarinho/) 
+[![Gmail Badge](https://img.shields.io/badge/-thomazcm@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:thomazcm@gmail.com)](mailto:thomazcm@gmail.com)
+ 
