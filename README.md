@@ -1,3 +1,5 @@
+<a name="readme-top"></a>
+
 <h1>REST API Financeira</h1> 
 
 <p align="center">
@@ -8,8 +10,6 @@
   <img src="http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge"/>
   <img src="http://img.shields.io/static/v1?label=TESTES&message=100%&color=GREEN&style=for-the-badge"/>
   <img src="http://img.shields.io/static/v1?label=License&message=MIT&color=green&style=for-the-badge"/>
-
-<a name="readme-top"></a>
 
 ### Tópicos 
 
@@ -167,7 +167,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 <p align="right">(<a href="#readme-top">voltar para o início</a>)</p>
 
-## 📝 Licença
+## Licença 📝
 
 Este projeto esta sob a licença [MIT](./LICENSE). Consulte o arquivo LICENSE.md para mais informações.
 
