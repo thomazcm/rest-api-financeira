@@ -119,7 +119,7 @@
   
   Além disso, para criar seu próprio banco de dados, [é preciso ter uma conta grauita no MongoDB Cloud](https://account.mongodb.com/account/register).
   
-### Como rodar a aplicação :arrow_forward:
+### Como rodar a aplicação
 
 1. Clone este repositório
 ```
@@ -167,7 +167,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 <p align="right">(<a href="#readme-top">voltar para o início</a>)</p>
 
-## Licença 📝
+## Licença
 
 Este projeto esta sob a licença [MIT](./LICENSE). Consulte o arquivo LICENSE.md para mais informações.
 
