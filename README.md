@@ -7,6 +7,9 @@
   <img src="http://img.shields.io/static/v1?label=Java&message=17&color=red&style=for-the-badge&logo=openjdk"/>
   <img src="http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge"/>
   <img src="http://img.shields.io/static/v1?label=TESTES&message=100%&color=GREEN&style=for-the-badge"/>
+  <img src="http://img.shields.io/static/v1?label=License&message=MIT&color=green&style=for-the-badge"/>
+
+<a name="readme-top"></a>
 
 ### Tópicos 
 
@@ -108,13 +111,15 @@
  
 #### Exibir um resumo das despesas e receitas do mês
 &nbsp;&nbsp;&nbsp;&nbsp;`GET` /resumo/{ano}/{mes}
+
+<p align="right">(<a href="#readme-top">voltar para o início</a>)</p>
   
 ## Pré-Requisitos
   Para rodar o servidor localmente você precisa ter instalado as seguintes ferramentas: [JDK](https://www.java.com/pt-BR/download/), [Git](https://git-scm.com/) e [Maven](https://maven.apache.org/install.html).
   
   Além disso, para criar seu próprio banco de dados, [é preciso ter uma conta grauita no MongoDB Cloud](https://account.mongodb.com/account/register).
   
-## Como rodar a aplicação :arrow_forward:
+### Como rodar a aplicação :arrow_forward:
 
 1. Clone este repositório
 ```
@@ -147,6 +152,8 @@ mvnw spring-boot:run
 ## O servidor inciará na porta:8080 - acesse as endpoints por <http://localhost:8080> 
 ```
 
+<p align="right">(<a href="#readme-top">voltar para o início</a>)</p>
+
 ## Tecnologias
 As seguintes ferramentas foram usadas na construção do projeto:
 
@@ -158,9 +165,13 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Postman]() - Testes de API
 - [Eclipse]() e [VSCode]() - Editores
 
+<p align="right">(<a href="#readme-top">voltar para o início</a>)</p>
+
 ## 📝 Licença
 
-Este projeto esta sob a licença [MIT](./LICENSE).
+Este projeto esta sob a licença [MIT](./LICENSE). Consulte o arquivo LICENSE.md para mais informações.
+
+<p align="right">(<a href="#readme-top">voltar para o início</a>)</p>
 
 ## Autor
 <b>Thomaz Machado</b>🚀<br />
@@ -170,3 +181,4 @@ Projeto desenvolvido por Thomaz Machado 👊 Entre em contato!
 [![Linkedin Badge](https://img.shields.io/badge/-Thomaz-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/tgmarinho/) 
 [![Gmail Badge](https://img.shields.io/badge/-thomazcm@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:thomazcm@gmail.com)](mailto:thomazcm@gmail.com)
  
+ <p align="right">(<a href="#readme-top">voltar para o início</a>)</p>
