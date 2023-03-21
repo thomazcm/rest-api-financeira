@@ -45,8 +45,71 @@
 
 :heavy_check_mark: Consulta de um resumo das despesas, receitas e saldo de cada mês do usuário 
 
-:heavy_check_mark: Geração de usuário demo com despesas e receitas variadas já cadastradas para demonstração
+:heavy_check_mark: Geração de usuário demo temporário com despesas e receitas variadas já cadastradas para demonstração
 
+### API REST
+  Os endpoints da API REST estão descritos abaixo.
+ 
+#### Cadastrar novo usuário
+&nbsp;&nbsp;&nbsp;&nbsp;`POST` /usuarios
+
+#### Criar novo usuário temporário para demonstração
+&nbsp;&nbsp;&nbsp;&nbsp;`POST` /usuarios/demo
+
+#### Cadastrar novo usuário
+&nbsp;&nbsp;&nbsp;&nbsp;`POST` /usuarios
+  
+#### Criar novo usuário temporário para demonstração
+&nbsp;&nbsp;&nbsp;&nbsp;`POST` /usuarios/demo
+
+#### Excluir usuário temporário
+&nbsp;&nbsp;&nbsp;&nbsp;`DELETE` /usuarios/{email}
+
+#### Listar todas as receitas cadastradas do usuario
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /receitas
+
+#### Listar todas as receitas do usuário com uma descrição específica
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /receitas?descricao={descricao}
+
+#### Listar todas as receitas do usuário de um mês específico
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /receitas/{ano}/{mes}
+
+#### Buscar informações detalhadas de uma receita por seu id
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /receitas/{id}
+
+#### Cadastrar nova receita
+&nbsp;&nbsp;&nbsp;&nbsp;`POST` /receitas
+
+#### Editar receita pelo id
+&nbsp;&nbsp;&nbsp;&nbsp;`PUT` /receitas/{id}
+
+#### Excluir receita pelo id
+&nbsp;&nbsp;&nbsp;&nbsp;`DELETE` /receitas/{id}
+
+#### Listar todas as despesas cadastradas do usuario
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /despesas
+
+#### Listar todas as despesas do usuário com uma descrição específica
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /despesas?descricao={descricao}
+
+#### Listar todas as despesas do usuário de um mês específico
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /despesas/{ano}/{mes}
+
+#### Buscar informações detalhadas de uma despesa por seu id
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /despesas/{id}
+
+#### Cadastrar nova despesa
+&nbsp;&nbsp;&nbsp;&nbsp;`POST` /despesas
+
+#### Editar despesa pelo id
+&nbsp;&nbsp;&nbsp;&nbsp;`PUT` /despesas/{id}
+
+#### Excluir despesa pelo id
+&nbsp;&nbsp;&nbsp;&nbsp;`DELETE` /despesas/{id}
+ 
+#### Exibir um resumo das despesas e receitas do mês
+&nbsp;&nbsp;&nbsp;&nbsp;`GET` /resumo/{ano}/{mes}
+  
 ## Pré-Requisitos
   Para rodar o servidor localmente você precisa ter instalado as seguintes ferramentas: [JDK](https://www.java.com/pt-BR/download/), [Git](https://git-scm.com/) e [Maven](https://maven.apache.org/install.html).
   
@@ -54,19 +117,18 @@
   
 ## Como rodar a aplicação :arrow_forward:
 
+1. Clone este repositório
 ```
-#Clone este repositório
 git clone https://github.com/thomazcm/rest-api-financeira
-
 ```
 
-Na página do [MongoDB Atlas](https://cloud.mongodb.com/), clique em "Browse Collections" e crie uma nova Database com o nome que deseja usar.
+2. Na página do [MongoDB Atlas](https://cloud.mongodb.com/), clique em "Browse Collections" e crie uma nova Database com o nome que deseja usar.
 
-Volte até a pagina inicial, clique em "Connect" e em seguida "Connect your Application". Copie a URI para se conectar ao seu banco de dados.
+3. Volte até a pagina inicial, clique em "Connect" e em seguida "Connect your Application". Copie a URI para se conectar ao seu banco de dados.
 
-Por fim, [crie uma nova JWT key](https://www.javainuse.com/jwtgenerator) para que sejam gerados os tokens de autenticação do seu servidor. 
+4. Por fim, [crie uma nova JWT key](https://www.javainuse.com/jwtgenerator) para que sejam gerados os tokens de autenticação do seu servidor. 
 
-Popule o arquivo env.properties na pasta raiz do repositório com as configurações do seu banco de dados:
+5. Popule o arquivo env.properties na pasta raiz do repositório com as configurações do seu banco de dados:
 
 ```
 DB_URI=
