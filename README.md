@@ -39,7 +39,9 @@
   
 ## Funcionalidades
 
-:heavy_check_mark: Cadastro e autenticação de usuários
+:heavy_check_mark: Cadastro de novos usuários e autenticação para obtenção do token de acesso
+
+:heavy_check_mark: Autenticação Stateless em cada request através do JSON Web Token para acesso dos dados do usuário
 
 :heavy_check_mark: Cadastro de novas despesas e receitas pelos usuários
 
