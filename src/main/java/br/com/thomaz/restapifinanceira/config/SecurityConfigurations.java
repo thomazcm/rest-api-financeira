@@ -72,37 +72,5 @@ public class SecurityConfigurations {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
-//    @Bean
-//    CorsConfigurationSource configurationSource() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
-//        corsConfiguration.setAllowedMethods(Arrays.asList(
-//                HttpMethod.GET.name(),
-//                HttpMethod.HEAD.name(),
-//                HttpMethod.POST.name(),
-//                HttpMethod.OPTIONS.name(),
-//                HttpMethod.PUT.name(),
-//                HttpMethod.DELETE.name()));
-//        corsConfiguration.setAllowCredentials(true);
-//        corsConfiguration.setMaxAge(1800L);
-//        source.registerCorsConfiguration("/**", corsConfiguration);
-//        return source;
-//    }
-    
-//    private List<Header> responseHeaders() {
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        responseHeaders.setAccessControlAllowOrigin("http://localhost:8080");
-//        responseHeaders.setAccessControlAllowCredentials(true);
-//        responseHeaders.setAccessControlAllowMethods(List.of(HttpMethod.GET, HttpMethod.POST, HttpMethod.OPTIONS));
-//        responseHeaders.setAccessControlAllowHeaders(List.of("Origin", "Content-Type", "Accept"));
-//        
-//        List<Header> headers = new ArrayList<>();
-//        responseHeaders.forEach((h,v) -> headers.add(new Header(h, v.get(0))));
-//        
-//        return headers;
-//    }
-
 
 }
