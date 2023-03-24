@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.config.config.security;
+package br.com.thomaz.restapifinanceira.config.filter;
 
 
 import java.io.IOException;
@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import br.com.thomaz.restapifinanceira.config.service.TokenService;
 import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 
 public class AutenticacaoViaTokenFilter extends OncePerRequestFilter{

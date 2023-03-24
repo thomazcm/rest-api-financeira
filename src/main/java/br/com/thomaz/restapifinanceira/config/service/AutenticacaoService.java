@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.config.config.security;
+package br.com.thomaz.restapifinanceira.config.service;
 
 
 import java.util.Optional;

@@ -16,8 +16,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoSession;
 import org.mockito.quality.Strictness;
 import org.springframework.web.util.UriComponentsBuilder;
-import br.com.thomaz.restapifinanceira.config.config.security.TokenService;
+
 import br.com.thomaz.restapifinanceira.config.exception.RegistroRepetidoException;
+import br.com.thomaz.restapifinanceira.config.service.TokenService;
 import br.com.thomaz.restapifinanceira.endpoint.DespesaController;
 import br.com.thomaz.restapifinanceira.endpoint.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.helper.Criar;

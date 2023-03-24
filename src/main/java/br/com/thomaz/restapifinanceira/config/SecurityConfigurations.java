@@ -1,4 +1,4 @@
-package br.com.thomaz.restapifinanceira.config.config.security;
+package br.com.thomaz.restapifinanceira.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import br.com.thomaz.restapifinanceira.config.filter.AutenticacaoViaTokenFilter;
+import br.com.thomaz.restapifinanceira.config.filter.CorsFilter;
+import br.com.thomaz.restapifinanceira.config.service.AutenticacaoService;
+import br.com.thomaz.restapifinanceira.config.service.TokenService;
 import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;
 
 @EnableWebSecurity

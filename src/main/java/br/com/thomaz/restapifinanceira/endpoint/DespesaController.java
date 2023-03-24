@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import br.com.thomaz.restapifinanceira.config.config.security.TokenService;
+
 import br.com.thomaz.restapifinanceira.config.exception.RegistroNaoEncontradoException;
+import br.com.thomaz.restapifinanceira.config.service.TokenService;
 import br.com.thomaz.restapifinanceira.endpoint.dto.DespesaDto;
 import br.com.thomaz.restapifinanceira.endpoint.form.RegistroForm;
 import br.com.thomaz.restapifinanceira.repository.UsuarioRepository;

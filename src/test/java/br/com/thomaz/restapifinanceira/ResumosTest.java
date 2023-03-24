@@ -12,7 +12,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoSession;
 import org.mockito.quality.Strictness;
-import br.com.thomaz.restapifinanceira.config.config.security.TokenService;
+
+import br.com.thomaz.restapifinanceira.config.service.TokenService;
 import br.com.thomaz.restapifinanceira.endpoint.ResumoController;
 import br.com.thomaz.restapifinanceira.endpoint.service.ResumoService;
 import br.com.thomaz.restapifinanceira.helper.Criar;
