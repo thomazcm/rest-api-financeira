@@ -159,13 +159,20 @@ mvnw spring-boot:run
 ## Tecnologias
 As seguintes ferramentas foram usadas na construção do projeto:
 
-- [Spring Boot 2.7.2]() - Framework
-- [Maven]() - Gerenciamento de Dependências
-- [Spring Security]() e [JJWT]() - Segurança
-- [MongoDB Atlas]() - Banco de Dados
-- [Mockito 4.5.1]() - Testes de Unidade
-- [Postman]() - Testes de API
-- [Eclipse]() e [VSCode]() - Editores
+#### Tecnologias
+- [Spring Boot 2.7.2](https://spring.io/projects/spring-boot) - Framework
+- [Maven](https://maven.apache.org/) - Gerenciamento de Dependências
+- [Mockito 4.5.1](https://site.mockito.org/) - Testes de Unidade
+- [Spring Security](https://docs.spring.io/spring-security/reference/index.html) e [JJWT](https://javadoc.io/doc/io.jsonwebtoken/jjwt/latest/index.html) - Segurança
+
+#### Persistência e Deploy
+- [MongoDB Atlas](https://www.mongodb.com/atlas/database)
+- [Heroku](https://www.heroku.com/)
+
+#### Ferramentas
+- [Postman](https://www.postman.com/) - Testes de API
+- [Eclipse](https://www.eclipse.org/) e [VSCode](https://code.visualstudio.com/) - Editores de código
+
 
 <p align="right">(<a href="#readme-top">voltar para o início</a>)</p>
 
