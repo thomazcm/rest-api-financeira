@@ -25,6 +25,14 @@
 
 :small_blue_diamond: [Autor](#autor)
 
+| :placard: Vitrine.Dev |     |
+| -------------  | --- |
+| :sparkles: Nome        | **REST-API Financeira**
+| :label: Tecnologias | Spring, MongoDB, JWT
+| :rocket: URL         |  https://webapp-financeira.herokuapp.com/
+| :fire: Desafio     | https://www.alura.com.br/challenges/back-end-4
+
+
 ## Descrição do projeto 
 
 <p align="justify">
