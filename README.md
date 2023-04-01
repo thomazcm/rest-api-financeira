@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-<h1>REST API Financeira</h1> 
+# REST API Financeira
 
 <p align="center">
   <img src="https://img.shields.io/static/v1?label=Spring&message=framework&color=blue&style=for-the-badge&logo=Spring"/>
@@ -10,6 +10,15 @@
   <img src="http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge"/>
   <img src="http://img.shields.io/static/v1?label=TESTES&message=100%&color=GREEN&style=for-the-badge"/>
   <img src="http://img.shields.io/static/v1?label=License&message=MIT&color=green&style=for-the-badge"/>
+
+| :placard: Vitrine.Dev |     |
+| -------------  | --- |
+| :sparkles: Nome        | **REST-API Financeira**
+| :label: Tecnologias | Spring, MongoDB, JWT
+| :rocket: URL         |  https://webapp-financeira.herokuapp.com/
+| :fire: Desafio     | https://www.alura.com.br/challenges/back-end-4
+
+![rest-api-imagem](https://miro.medium.com/v2/resize:fit:350/1*1S1FzR-yg-ucZGMoxCC9hw.png#vitrinedev)
 
 ### Tópicos 
 
@@ -24,13 +33,6 @@
 :small_blue_diamond: [Tecnologias](#tecnologias)
 
 :small_blue_diamond: [Autor](#autor)
-
-| :placard: Vitrine.Dev |     |
-| -------------  | --- |
-| :sparkles: Nome        | **REST-API Financeira**
-| :label: Tecnologias | Spring, MongoDB, JWT
-| :rocket: URL         |  https://webapp-financeira.herokuapp.com/
-| :fire: Desafio     | https://www.alura.com.br/challenges/back-end-4
 
 
 ## Descrição do projeto 
