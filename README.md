@@ -18,7 +18,7 @@
 | :rocket: URL         |  https://webapp-financeira.herokuapp.com/
 | :fire: Desafio     | https://www.alura.com.br/challenges/back-end-4
 
-![rest-api-imagem](https://miro.medium.com/v2/resize:fit:350/1*1S1FzR-yg-ucZGMoxCC9hw.png#vitrinedev)
+![rest-api-imagem](https://github.com/thomazcm/rest-api-financeira/blob/master/github/rest-api.png#vitrinedev)
 
 ### Tópicos 
 
